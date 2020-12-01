@@ -13,7 +13,7 @@ create table users
     first_name varchar(15) not null,
     last_name varchar(15) not null,
     tele_num varchar (15) unique,
-    home_address varchar (50),
+    address varchar (50),
     email varchar (45) not null unique,
     dob Date not null,
     profile_pic_address varchar(50),
@@ -77,7 +77,7 @@ insert into users (user_id, first_name, last_name, address, tele_num, email, cle
 insert into logins (user_id, email, password_hash, salt) values (6, "nalani.friedman@canadia.gov.ca", "52adec9ecb2948668ced6175d4e1a2fe94c24456a63a240c8265bdc98ebd8e2b", 9433);
 insert into users (user_id, first_name, last_name, address, tele_num, email, clearance) values (7, "JAZIEL", "CONLEY", "216 MORTON FIELD", "8761900045", "jaziel.conley@high_comiision.gov.uk", 2);
 insert into logins (user_id, email, password_hash, salt) values (7, "jaziel.conley@high_comiision.gov.uk", "f1712a4790229f9a8324ae3e20ec716ee99fb3e0fde431a7a250745bec40d5ce", 8427);
-insert into users (user_id, first_name, last_name, address, tele_num, email, clearance) values (8, "CLAYTON", "LOVE", "16 ANTHONY CÔTE", "8763814840", "clayton.love@organization.business.com", 2);
+insert into users (user_id, first_name, last_name, address, tele_num, email, clearance) values (8, "CLAYTON", "LOVE", "16 ANTHONY Cï¿½TE", "8763814840", "clayton.love@organization.business.com", 2);
 insert into logins (user_id, email, password_hash, salt) values (8, "clayton.love@organization.business.com", "5f1a04dd0c3f6e3f0cdc8f87fd7a2cf57d719a97e21f5d021dd9f0ecf6b13298", 3702);
 insert into users (user_id, first_name, last_name, address, tele_num, email, clearance) values (9, "KATIE", "FERGUSON", "183 WALTER OAKS", "8761119117", "katie.ferguson@outlook.com", 2);
 insert into logins (user_id, email, password_hash, salt) values (9, "katie.ferguson@outlook.com", "78e701ddcec22bf818cfa0b88bca22fabf4971929a3403cf9947b9ef89f70eae", 7063);
