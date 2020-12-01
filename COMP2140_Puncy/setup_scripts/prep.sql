@@ -13,7 +13,7 @@ create table users
     first_name varchar(15) not null,
     last_name varchar(15) not null,
     tele_num varchar (15) unique,
-    home_address varchar (50),
+    address varchar (50),
     email varchar (45) not null unique,
     dob Date not null,
     profile_pic_address varchar(50),
