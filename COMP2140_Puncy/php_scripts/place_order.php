@@ -11,6 +11,11 @@
         <!--TEMPLATE FROM: https://mdbootstrap.com/snippets/jquery/pjoter-2-0/747937 -->
     </head>
     <body>
+        <?php
+            $sql = "select * from users where user_id = " . $_SESSION['id'] . ";";
+            $conn->prepare($sql);
+            $user_data = $conn->query($sql)->fetch_assoc();
+        ?>
         <section class="order-form my-4 mx-4">
             <div class="container pt-4">
 
@@ -27,19 +32,27 @@
                       <label class="order-form-label">Name</label>
                     </div>
                     <div class="col-12 col-sm-6">
-                      <input class="order-form-input" placeholder="First">
+                    <?php
+                        $input = '<input class="order-form-input" name = "fname" value="'.ucfirst(strtolower($user_data['first_name'])).'">';
+                        echo $input;
+                    ?>
+                      
                     </div>
                     <div class="col-12 col-sm-6 mt-2 mt-sm-0">
-                      <input class="order-form-input" placeholder="Last">
+                      <?php
+                        $input = '<input class="order-form-input" name = "fname" value="'.ucfirst(strtolower($user_data['last_name'])).'">';
+                        echo $input;
+                      ?>
                     </div>
                   </div>
 
                   <div class="row mt-3 mx-4">
                     <div class="col-12">
-                      <label class="order-form-label">Type of thing you want to order</label>
+                      <label class="order-form-label">Type of garment you want to order</label>
                     </div>
                     <div class="col-12">
                       <select name = "job-type" class = "order-form-input">
+                        <option value = '0'>------------</option>
                         <?php
                           $sql = "select preset_id, type from job_presets order by preset_id ASC;";
                           $conn->prepare($sql);
@@ -57,10 +70,23 @@
 
                   <div class="row mt-3 mx-4">
                     <div class="col-12">
-                      <label class="order-form-label">Another type of thing you want to order</label>
+                      <label class="order-form-label">Measurement Preset:</label>
                     </div>
                     <div class="col-12">
-                      <input class="order-form-input" placeholder=" ">
+                      <select name = "measurement" class="order-form-input" placeholder=" ">
+                      <option value = '0'>Default Measurements</option>
+                      <?php
+                          $sql = "select measurement_id, name from measurements where user_id = ".$_SESSION['id']." order by name ASC;";
+                          $conn->prepare($sql);
+                          $measurements = $conn->query($sql);
+                          foreach($measurements as $measure)
+                          {
+                              
+                              $option = "<option value = '".$measure['measurement_id']."'>" .$measure['name']. "</option>";
+                              echo $option;
+                          }
+                        ?>
+                        </select>
                     </div>
                   </div>
 

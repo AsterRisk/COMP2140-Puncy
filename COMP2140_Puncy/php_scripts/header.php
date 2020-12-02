@@ -1,7 +1,7 @@
 <?php
-    echo "HELLO!";
     if(!isset($_SESSION))
     {
+        
         session_start();
         //include 'login.php';
         $servername = "localhost";
@@ -20,5 +20,11 @@
             $conn->prepare($sql);
             $conn->query($sql);
         }
+    }
+    else
+    {
+            
+            
+        
     }
 ?>
