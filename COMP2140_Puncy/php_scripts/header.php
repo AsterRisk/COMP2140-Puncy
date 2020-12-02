@@ -1,4 +1,5 @@
 <?php
+    echo "HELLO!";
     if(!isset($_SESSION))
     {
         session_start();
@@ -15,7 +16,7 @@
         else
         {
             //echo $_SESSION['id'];
-            $sql = "use final_proj_3161;";
+            $sql = "use puncys_store;";
             $conn->prepare($sql);
             $conn->query($sql);
         }

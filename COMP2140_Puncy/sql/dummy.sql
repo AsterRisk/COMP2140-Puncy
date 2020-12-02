@@ -36,6 +36,7 @@ create table orders
     order_id int not null unique,
     state varchar(10) not null,
     measurements int,
+    date_placed Date not null,
     due_date Date,
     est_cost NUMERIC,
     primary key (order_id)

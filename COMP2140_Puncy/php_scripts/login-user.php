@@ -1,15 +1,16 @@
 <?php
+    
     include 'header.php';
-    $query = "select * from logins where email = '" . htmlspecialchars($_POST['email']) . "';"
+    $query = "select * from logins where email = '" . htmlspecialchars($_POST['email']) . "';";
     $conn->prepare($query);
-    $logins = $conn->query();
+    $logins = $conn->query($query);
     if($logins->num_rows <= 0)
     {
         echo "<h1>Login not found.</h1>";
     }
     else
     {
-        $row = $results->fetch_assoc();
+        $row = $logins->fetch_assoc();
         $salt = $row['salt'];
         $pass_digest = $row['password_hash'];
         $test_pass = htmlspecialchars($_POST['password']) . $salt;
