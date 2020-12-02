@@ -30,7 +30,7 @@ def gen_user(new_id):
     pass_buff = password
     password += str(salt)
     pass_digest = hashlib.sha256(password.encode()).hexdigest()
-    userSQL = "insert into users (user_id, first_name, last_name, address, tele_num, email, clearance) values ({}, \"{}\", \"{}\", \"{}\", \"{}\", \"{}\", 2);\n".format(new_id, fname, lname, addr, phone, email)
+    userSQL = "insert into users (user_id, first_name, last_name, home_address, tele_num, email, clearance, dob) values ({}, \"{}\", \"{}\", \"{}\", \"{}\", \"{}\", 2, \"{}\");\n".format(new_id, fname, lname, addr, phone, email, dob)
     loginSQL = "insert into logins (user_id, email, password_hash, salt) values ({}, \"{}\", \"{}\", {});\n".format(new_id, email, pass_digest, salt)
     return (userSQL, loginSQL, email, pass_buff)
 
