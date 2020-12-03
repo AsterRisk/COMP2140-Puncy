@@ -4,11 +4,88 @@
 ?>
 <html>
     <head>
+        <!--TEMPLATE FROM: https://mdbootstrap.com/snippets/jquery/pjoter-2-0/747937 -->
         <title>Order Form</title>
         <link rel = "stylesheet" href = "../templates/order_form/css/styles.css"/>
         <srcipt src = "jquery-3.2.1.min.js"></srcipt>
         <script src = "../templates/order_form/js/script.js"></script>
-        <!--TEMPLATE FROM: https://mdbootstrap.com/snippets/jquery/pjoter-2-0/747937 -->
+        <!-- -->
+        <!-- Datepicker JS and CSS provided by https://jqueryui.com/datepicker/-->
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="/resources/demos/style.css">
+        <link href="../templates/home_page/css/ui.css" rel="stylesheet" type="text/css"/>
+        <link href="../templates/home_page/css/responsive.css" rel="stylesheet" media="only screen and (max-width: 1200px)" />
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <!-- -->
+        <!-- change the form based on selections -->
+        <script>
+            $(document).ready(function()
+            {
+                    $( "#datepicker" ).datepicker();
+                    $("#new-measurements").change(function()
+                        {
+                            if(this.checked == true)
+                            {
+                                $('#existing-measures').hide();
+                                $('#new-measures').show();
+                            }
+                            else
+                            {
+                                $('#existing-measures').show();
+                                $('#new-measures').hide();
+                            }
+
+                        }
+                    );
+                    
+            });
+        </script>
+        <script>
+            $(document).ready(function()
+            {
+                    $("#job-type").change(function()
+                        {
+                            var val = parseInt($(this).children("option:selected").val());
+                            if((val >=  11) && (val <= 15))
+                            {
+                                $('#pants').show().siblings().hide();
+                                $('#set-meas-name').show();
+                            }
+                            if((val >=  21) && (val <= 25))
+                            {
+                                $('#blouses').show().siblings().hide();
+                                $('#set-meas-name').show();
+                            }
+                            if((val >=  1) && (val <= 5))
+                            {
+                                $('#shirts').show().siblings().hide();
+                                $('#set-meas-name').show();
+                            }
+                            if((val >=  16) && (val <= 20))
+                            {
+                                $('#skirts').show().siblings().hide();
+                                $('#set-meas-name').show();
+                            }
+                            if((val >=  6) && (val <= 10))
+                            {
+                                $('#shorts').show().siblings().hide();
+                                $('#set-meas-name').show();
+                            }
+                            if(val == 0)
+                            {
+                                $('#undecided').show().siblings().hide();
+                                $('#set-meas-name').show();
+                            }
+                            var type = ($(this).children("option:selected").attr('name'));
+                            console.log(type);
+                            $('#job_type').attr("value", type);
+                        }
+                    );
+            });
+        </script>
+        <!-- -->
+        
     </head>
     <body>
         <?php
@@ -16,133 +93,453 @@
             $conn->prepare($sql);
             $user_data = $conn->query($sql)->fetch_assoc();
         ?>
-        <section class="order-form my-4 mx-4">
-            <div class="container pt-4">
-
-              <div class="row">
-                <div class="col-12">
-                  <h1>Place a Custom Job Order</h1>
-                  <span><i>*Note, jobs with less than 10 days before their due date incur extra charge.</i></span>
-                  <hr class="mt-1">
-                </div>
-                <div class="col-12">
-
-                  <div class="row mx-4">
-                    <div class="col-12 mb-2">
-                      <label class="order-form-label">Name</label>
+        <div style = "background-color:#3167eb;width=100%">
+            <div class="col-lg-4 col-sm-6 col-12" >
+                <div class="widgets-wrap float-md-right">
+                    <div class="widget-header icontext">
+                        <a href="#" ><img style = "height:64px;width:64px;border-radius:50%;margin:6px;" src = "../templates/assets/blank-profile.jpeg"></a>
+                        <div class="text" style = "float: right !important">
+                            <span class="text-muted" style = "color:#fff">Welcome, <?php echo ucwords(strtolower($user_data['first_name'])); ?>!</span>
+                            <div> 
+                                <a href="logout.php" style = "color:#ededed">Sign Out</a> 
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-12 col-sm-6">
-                    <?php
-                        $input = '<input class="order-form-input" name = "fname" value="'.ucfirst(strtolower($user_data['first_name'])).'">';
-                        echo $input;
-                    ?>
-                      
-                    </div>
-                    <div class="col-12 col-sm-6 mt-2 mt-sm-0">
-                      <?php
-                        $input = '<input class="order-form-input" name = "fname" value="'.ucfirst(strtolower($user_data['last_name'])).'">';
-                        echo $input;
-                      ?>
-                    </div>
-                  </div>
-
-                  <div class="row mt-3 mx-4">
-                    <div class="col-12">
-                      <label class="order-form-label">Type of garment you want to order</label>
-                    </div>
-                    <div class="col-12">
-                      <select name = "job-type" class = "order-form-input">
-                        <option value = '0'>------------</option>
-                        <?php
-                          $sql = "select preset_id, type from job_presets order by preset_id ASC;";
-                          $conn->prepare($sql);
-                          $jobs = $conn->query($sql);
-                          foreach($jobs as $job)
-                          {
-                              
-                              $option = "<option value = '".$job['preset_id']."'>" .$job['type']. "</option>";
-                              echo $option;
-                          }
-                        ?>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div class="row mt-3 mx-4">
-                    <div class="col-12">
-                      <label class="order-form-label">Measurement Preset:</label>
-                    </div>
-                    <div class="col-12">
-                      <select name = "measurement" class="order-form-input" placeholder=" ">
-                      <option value = '0'>Default Measurements</option>
-                      <?php
-                          $sql = "select measurement_id, name from measurements where user_id = ".$_SESSION['id']." order by name ASC;";
-                          $conn->prepare($sql);
-                          $measurements = $conn->query($sql);
-                          foreach($measurements as $measure)
-                          {
-                              
-                              $option = "<option value = '".$measure['measurement_id']."'>" .$measure['name']. "</option>";
-                              echo $option;
-                          }
-                        ?>
-                        </select>
-                    </div>
-                  </div>
-
-                  <div class="row mt-3 mx-4">
-                    <div class="col-12">
-                      <label class="order-form-label" for="date-picker-example">Date</label>
-                    </div>
-                    <div class="col-12">
-                      <input class="order-form-input datepicker" placeholder="Selected date" type="text"
-                        id="date-picker-example">
-                    </div>
-                  </div>
-
-                  <div class="row mt-3 mx-4">
-                    <div class="col-12">
-                      <label class="order-form-label">Adress</label>
-                    </div>
-                    <div class="col-12">
-                      <input class="order-form-input" placeholder="Street Address">
-                    </div>
-                    <div class="col-12 mt-2">
-                      <input class="order-form-input" placeholder="Street Address Line 2">
-                    </div>
-                    <div class="col-12 col-sm-6 mt-2 pr-sm-2">
-                      <input class="order-form-input" placeholder="City">
-                    </div>
-                    <div class="col-12 col-sm-6 mt-2 pl-sm-0">
-                      <input class="order-form-input" placeholder="Region">
-                    </div>
-                    <div class="col-12 col-sm-6 mt-2 pr-sm-2">
-                      <input class="order-form-input" placeholder="Postal / Zip Code">
-                    </div>
-                    <div class="col-12 col-sm-6 mt-2 pl-sm-0">
-                      <input class="order-form-input" placeholder="Country">
-                    </div>
-                  </div>
-
-                  <div class="row mt-3 mx-4">
-                    <div class="col-12">
-                      <div class="form-check">
-                        <input type="checkbox" class="form-check-input" name="validation" id="validation" value="1">
-                        <label for="validation" class="form-check-label">I know what I need to know</label>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="row mt-3">
-                    <div class="col-12">
-                      <button type="button" id="btnSubmit" class="btn btn-dark d-block mx-auto btn-submit">Submit</button>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
+                </div> <!-- widgets-wrap.// -->
             </div>
-          </section>
+        </div>
+            
+        <form id = "order-form" method = "POST" action = "order.php" class="order-form my-4 mx-4 body">
+            
+                <div class="container pt-4">
+
+                  <div class="row">
+                    <div class="col-12">
+                      <span>Place a Custom Job Order</span>
+                        <br>
+                        <hr class = "mt-1">
+                      <span><i>*Note, jobs with less than 10 days before their due date incur extra charge.</i></span>
+                      <hr class="mt-1">
+                    </div>
+                    <div class="col-12">
+
+                      <div class="row mx-4">
+                        <div class="col-12 mb-2">
+                          <label class="order-form-label">Name</label>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                        <?php
+                            $input = '<input class="order-form-input" name = "fname" value="'.ucfirst(strtolower($user_data['first_name'])).'">';
+                            echo $input;
+                        ?>
+
+                        </div>
+                        <div class="col-12 col-sm-6 mt-2 mt-sm-0">
+                          <?php
+                            $input = '<input class="order-form-input" name = "lname" value="'.ucfirst(strtolower($user_data['last_name'])).'">';
+                            echo $input;
+                          ?>
+                        </div>
+                      </div>
+
+                      <div class="row mt-3 mx-4">
+                        <div class="col-12">
+                          <label class="order-form-label">Type of garment you want to order</label>
+                        </div>
+                        <div class="col-12">
+                          <select id = "job-type" name = "job-type" class = "order-form-input">
+                            <option value = '0'>------------</option>
+                            <?php
+                              $sql = "select preset_id, type from job_presets where preset_id > 1 order by preset_id ASC;";
+                              $conn->prepare($sql);
+                              $jobs = $conn->query($sql);
+                              foreach($jobs as $job)
+                              {
+
+                                  $option = "<option value = ".$job['preset_id']." name = ".$job['type'].">" .$job['type']. "</option>";
+                                  echo $option;
+                              }
+                            ?>
+                          </select>
+                          <input id = "job_type" name = "job_type" type = "text" value = "blank" hidden/>
+                        </div>
+                      </div>
+
+                      <div class="row mt-3 mx-4">
+                        <div class="col-12">
+                          <label class="order-form-label">Measurement Preset:</label>
+                        </div>
+                        <div class="row mt-3 mx-4">
+                            <div class="col-12">
+                              <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="new-measurements" id="new-measurements" checked value = 1>
+                                <label for="validation" class="form-check-label">Use new Measurements?</label>
+                              </div>
+                            </div>
+                        </div>
+                        <div class="col-12" id = "existing-measures" hidden>
+                          <select id = "preset_measurements" name = "measurement_id" class="order-form-input" placeholder=" ">
+                          <option value = '0'>Default Measurements</option>
+                          <?php
+                              $sql = "select measurement_id, name from measurements where user_id = ".$_SESSION['id']." order by name ASC;";
+                              $conn->prepare($sql);
+                              $measurements = $conn->query($sql);
+                              foreach($measurements as $measure)
+                              {
+
+                                  $option = "<option value = '".$measure['measurement_id']."'>" .$measure['name']. "</option>";
+                                  echo $option;
+                              }
+                            ?>
+                            </select>
+                        </div>
+                        <div class = "col-12" id = "new-measures">
+                            <div id = "set-meas-name">
+                                <div class="col-12 col-sm-6">
+                                    <input class="order-form-input" name = "meas-name" id = "meas-name" placeholder = "What would you like to save this preset as?"/>
+                                </div>
+                            </div>
+                            <div id = "undecided">
+                                <div class="col-12 col-sm-6">
+                                    <input class="order-form-input" value = "Please pick a job category."readonly/>
+                                </div>
+                            </div>
+                            <div id = "shirts" hidden>
+                                <div class = "col-12">
+                                    <span>Shirts:</span>
+                                </div>
+
+                                <div class="col-12">
+                                  <label class="order-form-label">Length</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input class="order-form-input" name = "s_length"/>
+                                </div>
+
+                                <div class="col-12">
+                                  <label class="order-form-label">Waist</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input class="order-form-input" name = "s_waist"/>
+                                </div>
+
+
+                                <div class="col-12">
+                                  <label class="order-form-label">Hip</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input class="order-form-input" name = "s_hip"/>
+                                </div>
+
+
+                                <div class="col-12">
+                                  <label class="order-form-label">Armhole</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input class="order-form-input" name = "s_armhole"/>
+                                </div>
+
+
+                                <div class="col-12">
+                                  <label class="order-form-label">Bust</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input class="order-form-input" name = "s_bust"/>
+                                </div>
+
+
+                                <div class="col-12">
+                                  <label class="order-form-label">Sleeve</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input class="order-form-input" name = "s_sleeve"/>
+                                </div>
+
+
+                                <div class="col-12">
+                                  <label class="order-form-label">Bicep</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input class="order-form-input" name = "s_bicep"/>
+                                </div>
+
+
+                                <div class="col-12">
+                                  <label class="order-form-label">Neck</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input class="order-form-input" name = "s_neck"/>
+                                </div>
+
+
+                                <div class="col-12">
+                                  <label class="order-form-label">Shoulder</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input class="order-form-input" name = "s_shoulder"/>
+                                </div>
+
+
+                                <div class="col-12">
+                                  <label class="order-form-label">Across Back</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input class="order-form-input" name = "s_across-back"/>
+                                </div>
+
+
+                                <div class="col-12">
+                                  <label class="order-form-label">Bust Point</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input class="order-form-input" name = "s_bust-point"/>
+                                </div>
+
+                            </div>
+                            <div id = "shorts" hidden>
+                                <span>Shorts:</span>
+                                <div class="col-12">
+                                  <label class="order-form-label">Length</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input class="order-form-input" name = "sh_length"/>
+                                </div>
+                                <div class="col-12">
+                                  <label class="order-form-label">Waist</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input class="order-form-input" name = "sh_waist"/>
+                                </div>
+                                <div class="col-12">
+                                  <label class="order-form-label">Hip</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input class="order-form-input" name = "sh_hip" />
+                                </div>
+                                <div class="col-12">
+                                  <label class="order-form-label">Around Leg</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input class="order-form-input" name = "sh_round-leg" />
+                                </div>
+                                <div class="col-12">
+                                  <label class="order-form-label">Around Knee</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input class="order-form-input" name = "sh_round-knee" />
+                                </div>
+                            </div>
+                            <div id = "skirts" hidden>
+                                <span>Skirts:</span>
+                                <div class="col-12">
+                                  <label class="order-form-label">Length</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input class="order-form-input" name = "sk_length"/>
+                                </div>
+
+                                <div class="col-12">
+                                  <label class="order-form-label">Waist</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input class="order-form-input" name = "sk_waist"/>
+                                </div>
+
+                                <div class="col-12">
+                                  <label class="order-form-label">Hip</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input class="order-form-input" name = "sk_hip"/>
+                                </div>
+                            </div>
+                            <div id = "blouses" hidden>
+                                <span>Blouses:</span>
+                                <div class = "col-12">
+                                    <span>Shirts:</span>
+                                </div>
+
+                                <div class="col-12">
+                                  <label class="order-form-label">Length</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input class="order-form-input" name = "b_length"/>
+                                </div>
+
+                                <div class="col-12">
+                                  <label class="order-form-label">Waist</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input class="order-form-input" name = "b_waist"/>
+                                </div>
+
+
+                                <div class="col-12">
+                                  <label class="order-form-label">Hip</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input class="order-form-input" name = "b_hip"/>
+                                </div>
+
+
+                                <div class="col-12">
+                                  <label class="order-form-label">Armhole</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input class="order-form-input" name = "b_armhole"/>
+                                </div>
+
+
+                                <div class="col-12">
+                                  <label class="order-form-label">Bust</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input class="order-form-input" name = "b_bust"/>
+                                </div>
+
+
+                                <div class="col-12">
+                                  <label class="order-form-label">Sleeve</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input class="order-form-input" name = "b_sleeve"/>
+                                </div>
+
+
+                                <div class="col-12">
+                                  <label class="order-form-label">Bicep</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input class="order-form-input" name = "b_bicep"/>
+                                </div>
+
+
+                                <div class="col-12">
+                                  <label class="order-form-label">Neck</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input class="order-form-input" name = "b_neck"/>
+                                </div>
+
+
+                                <div class="col-12">
+                                  <label class="order-form-label">Shoulder</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input class="order-form-input" name = "b_shoulder"/>
+                                </div>
+
+
+                                <div class="col-12">
+                                  <label class="order-form-label">Across Back</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input class="order-form-input" name = "b_across-back"/>
+                                </div>
+
+
+                                <div class="col-12">
+                                  <label class="order-form-label">Bust Point</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input class="order-form-input" name = "b_bust-point"/>
+                                </div>
+                            </div>
+                            <div id = "pants" hidden>
+                                <span>Pants:</span>
+                                <div class="col-12">
+                                  <label class="order-form-label">Length</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input class="order-form-input" name = "p_length"/>
+                                </div>
+                                <div class="col-12">
+                                  <label class="order-form-label">Waist</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input class="order-form-input" name = "p_waist"/>
+                                </div>
+                                <div class="col-12">
+                                  <label class="order-form-label">Hip</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input class="order-form-input" name = "p_hip"/>
+                                </div>
+                                <div class="col-12">
+                                  <label class="order-form-label">Ankle</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input class="order-form-input" name = "p_ankle"/>
+                                </div>
+                                <div class="col-12">
+                                  <label class="order-form-label">Round Leg</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input class="order-form-input" name = "p_round-leg"/>
+                                </div>
+                                <div class="col-12">
+                                  <label class="order-form-label">Round Knee</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input class="order-form-input" name = "p_round-knee"/>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+
+                      <div class="row mt-3 mx-4">
+                        <div class="col-12">
+                          <label class="order-form-label" for="date-picker-example">Date</label>
+                        </div>
+                        <div class="col-12">
+                          <input class="order-form-input datepicker" placeholder="" type="text" id="datepicker" name = "due-date">
+                        </div>
+                      </div>
+
+                      <div class="row mt-3 mx-4">
+                        <div class="col-12">
+                          <label class="order-form-label">Address</label>
+                        </div>
+                        <div class="col-12">
+                          <?php
+                            $input = '<input class="order-form-input" name = "addr" value = "'.$user_data['home_address'].'">';
+                            echo $input;
+                          ?>
+                        </div>
+                      </div>
+                        
+                      <div class="row mt-3 mx-4">
+                        <div class="col-12">
+                          <label class="order-form-label">Contact Number</label>
+                        </div>
+                        <div class="col-12">
+                          <?php
+                            $input = '<input class="order-form-input" name = "phone" value = "'.$user_data['tele_num'].'">';
+                            echo $input;
+                          ?>
+                        </div>
+                      </div>
+                        <div class="row mt-3 mx-4">
+                            <div class="col-12">
+                              <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="bringing-fabric" id="bringing-fabric" checked value = 1>
+                                <label for="validation" class="form-check-label">Are you providing the fabric?</label>
+                              </div>
+                            </div>
+                        </div>
+
+                        <br>
+                        <hr>
+                      <div class="row mt-3">
+                        <div class="col-12">
+                          <input type="submit" id="btnSubmit" value= "Submit!" class="btn"/>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+          
+        </form>
     </body>
 </html>
   

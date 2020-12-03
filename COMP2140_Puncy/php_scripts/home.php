@@ -5,11 +5,15 @@
 <meta http-equiv="pragma" content="no-cache" />
 <meta http-equiv="cache-control" content="max-age=604800" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+<?php include 'header.php'?>
 <title>Website title - bootstrap html template</title>
 
 <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon">
 
+    
+<!-- slideshow -->
+<link rel = "stylesheet" href = "../templates/home_page/css/slideshow.css">
+<script src = "../templates/home_page//js/slideshow.js"></script>
 <!-- jQuery -->
 <script src="https://bootstrap-ecommerce.com/bootstrap-ecommerce-html/js/jquery-2.0.0.min.js" type="text/javascript"></script>
 
@@ -40,29 +44,28 @@ $(document).ready(function() {
 
 </head>
 <body>
-
+<?php
+  $sql = "select * from users where user_id = 1;";
+  $conn->prepare($sql);
+  $puncy_data = $conn->query($sql)->fetch_assoc();
+  $sql = "select * from users where user_id = " . $_SESSION['id'] . ";";
+  $conn->prepare($sql);
+  $user_data = $conn->query($sql)->fetch_assoc();
+?>
 
 <header class="section-header">
 
 <nav class="navbar navbar-dark navbar-expand p-0 bg-primary">
 <div class="container">
     <ul class="navbar-nav d-none d-md-flex mr-auto">
-		<li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-		<li class="nav-item"><a class="nav-link" href="#">Delivery</a></li>
-		<li class="nav-item"><a class="nav-link" href="#">Payment</a></li>
+		<li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
+		<li class="nav-item"><a class="nav-link" href="place_order.php">Make a new Order!</a></li>
     </ul>
     <ul class="navbar-nav">
-		<li  class="nav-item"><a href="#" class="nav-link"> Call: +99812345678 </a></li>
-		<li class="nav-item dropdown">
-		 	<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"> English </a>
-		    <ul class="dropdown-menu dropdown-menu-right" style="max-width: 100px;">
-				<li><a class="dropdown-item" href="#">Arabic</a></li>
-				<li><a class="dropdown-item" href="#">Russian </a></li>
-		    </ul>
-		</li>
+		<li  class="nav-item"><a href="#" class="nav-link"> Call: <?php echo $puncy_data['tele_num']?> </a></li>
 	</ul> <!-- list-inline //  -->
   </div> <!-- navbar-collapse .// -->
-</div> <!-- container //  -->
+ <!-- container //  -->
 </nav> <!-- header-top-light.// -->
 
 <section class="header-main border-bottom">
@@ -70,7 +73,7 @@ $(document).ready(function() {
 <div class="row align-items-center">
 	<div class="col-lg-2 col-6">
 		<a href="http://bootstrap-ecommerce.com" class="brand-wrap">
-			<img class="logo" src="images/logo.png">
+			<img class="logo" src="../templates/assets/logo.png">
 		</a> <!-- brand-wrap.// -->
 	</div>
 	<div class="col-lg-6 col-12 col-sm-12">
@@ -87,17 +90,12 @@ $(document).ready(function() {
 	</div> <!-- col.// -->
 	<div class="col-lg-4 col-sm-6 col-12">
 		<div class="widgets-wrap float-md-right">
-			<div class="widget-header  mr-3">
-				<a href="#" class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></a>
-				<span class="badge badge-pill badge-danger notify">0</span>
-			</div>
 			<div class="widget-header icontext">
-				<a href="#" class="icon icon-sm rounded-circle border"><i class="fa fa-user"></i></a>
+				<a href="#" ><img style = "height:64px;width:64px;border-radius:50%;margin:6px;" src = "../templates/assets/blank-profile.jpeg"></a>
 				<div class="text">
-					<span class="text-muted">Welcome!</span>
+					<span class="text-muted">Welcome, <?php echo ucwords(strtolower($user_data['first_name'])); ?>!</span>
 					<div> 
-						<a href="#">Sign in</a> |  
-						<a href="#"> Register</a>
+						<a href="logout.php">Sign Out</a> 
 					</div>
 				</div>
 			</div>
@@ -109,7 +107,7 @@ $(document).ready(function() {
 </header> <!-- section-header.// -->
 
 
-<nav class="navbar navbar-main navbar-expand-lg navbar-light border-bottom">
+<nav class="navbar navbar-main navbar-expand-lg navbar-light border-bottom" hidden>
   <div class="container">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_nav" aria-controls="main_nav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -163,7 +161,53 @@ $(document).ready(function() {
 <div class="container">
 
 <div class="intro-banner-wrap">
-	<img src="images/banners/1.jpg" class="img-fluid rounded">
+	<!-- Slideshow container -->
+        <div class="slideshow-container" hidden>
+
+          <!-- Full-width images with number and caption text -->
+          <div class="mySlides fade">
+            <div class="numbertext">1 / 5</div>
+            <img src="../templates/assets/slideshow_1.jpg" style="width:100%">
+            
+          </div>
+
+          <div class="mySlides fade">
+            <div class="numbertext">2 / 5</div>
+            <img src="../templates/assets/slideshow_2.jpg" style="width:100%">
+            
+          </div>
+
+          <div class="mySlides fade">
+            <div class="numbertext">3 / 5</div>
+            <img src="../templates/assets/slideshow_3.jpg" style="width:100%">
+            
+          </div>
+            
+          <div class="mySlides fade">
+            <div class="numbertext">4 / 5</div>
+            <img src="../templates/assets/slideshow_4.jpg" style="width:100%">
+          </div>
+            
+          <div class="mySlides fade">
+            <div class="numbertext">5 / 5</div>
+            <img src="../templates/assets/slideshow_5.jpg" style="width:100%">
+            
+          </div>
+
+          <!-- Next and previous buttons -->
+          <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+          <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        </div>
+        <br>
+
+        <!-- The dots/circles -->
+        <div style="text-align:center" hidden>
+          <span class="dot" onclick="currentSlide(1)"></span>
+          <span class="dot" onclick="currentSlide(2)"></span>
+          <span class="dot" onclick="currentSlide(3)"></span>
+          <span class="dot" onclick="currentSlide(4)"></span>
+          <span class="dot" onclick="currentSlide(5)"></span>
+        </div>
 </div>
 
 </div> <!-- container //  -->
@@ -173,7 +217,7 @@ $(document).ready(function() {
 
 <!-- ========================= SECTION FEATURE ========================= -->
 <section class="section-content padding-y-sm">
-<div class="container">
+<div class="container" hidden>
 <article class="card card-body">
 
 
@@ -221,7 +265,7 @@ $(document).ready(function() {
 <div class="container">
 
 <header class="section-heading">
-	<h3 class="section-title">Popular products</h3>
+	<h3 class="section-title">Popular orders</h3>
 </header><!-- sect-heading -->
 
 	
@@ -241,7 +285,7 @@ $(document).ready(function() {
 							<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> 
 						</li>
 					</ul>
-					<span class="label-rating text-muted"> 34 reviws</span>
+					
 				</div>
 				<div class="price mt-1">$179.00</div> <!-- price-wrap.// -->
 			</figcaption>
@@ -262,7 +306,7 @@ $(document).ready(function() {
 							<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> 
 						</li>
 					</ul>
-					<span class="label-rating text-muted"> 34 reviws</span>
+					
 				</div>
 				<div class="price mt-1">$280.00</div> <!-- price-wrap.// -->
 			</figcaption>
@@ -283,7 +327,7 @@ $(document).ready(function() {
 							<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> 
 						</li>
 					</ul>
-					<span class="label-rating text-muted"> 34 reviws</span>
+					
 				</div>
 				<div class="price mt-1">$56.00</div> <!-- price-wrap.// -->
 			</figcaption>
@@ -304,7 +348,7 @@ $(document).ready(function() {
 							<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> 
 						</li>
 					</ul>
-					<span class="label-rating text-muted"> 34 reviws</span>
+					
 				</div>
 				<div class="price mt-1">$179.00</div> <!-- price-wrap.// -->
 			</figcaption>
@@ -321,222 +365,6 @@ $(document).ready(function() {
 <!-- ========================= SECTION CONTENT ========================= -->
 <section class="section-content">
 <div class="container">
-
-<header class="section-heading">
-	<h3 class="section-title">New arrived</h3>
-</header><!-- sect-heading -->
-
-<div class="row">
-	<div class="col-md-3">
-		<div href="#" class="card card-product-grid">
-			<a href="#" class="img-wrap"> <img src="images/items/5.jpg"> </a>
-			<figcaption class="info-wrap">
-				<a href="#" class="title">Just another product name</a>
-				
-				<div class="rating-wrap">
-					<ul class="rating-stars">
-						<li style="width:80%" class="stars-active"> 
-							<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
-						</li>
-						<li>
-							<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> 
-						</li>
-					</ul>
-					<span class="label-rating text-muted"> 34 reviws</span>
-				</div>
-				<div class="price mt-1">$179.00</div> <!-- price-wrap.// -->
-			</figcaption>
-		</div>
-	</div> <!-- col.// -->
-	<div class="col-md-3">
-		<div href="#" class="card card-product-grid">
-			<a href="#" class="img-wrap"> <img src="images/items/6.jpg"> </a>
-			<figcaption class="info-wrap">
-				<a href="#" class="title">Some item name here</a>
-				
-				<div class="rating-wrap">
-					<ul class="rating-stars">
-						<li style="width:80%" class="stars-active"> 
-							<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
-						</li>
-						<li>
-							<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> 
-						</li>
-					</ul>
-					<span class="label-rating text-muted"> 34 reviws</span>
-				</div>
-				<div class="price mt-1">$280.00</div> <!-- price-wrap.// -->
-			</figcaption>
-		</div>
-	</div> <!-- col.// -->
-	<div class="col-md-3">
-		<div href="#" class="card card-product-grid">
-			<a href="#" class="img-wrap"> <img src="images/items/7.jpg"> </a>
-			<figcaption class="info-wrap">
-				<a href="#" class="title">Great product name here</a>
-				
-				<div class="rating-wrap">
-					<ul class="rating-stars">
-						<li style="width:80%" class="stars-active"> 
-							<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
-						</li>
-						<li>
-							<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> 
-						</li>
-					</ul>
-					<span class="label-rating text-muted"> 34 reviws</span>
-				</div>
-				<div class="price mt-1">$56.00</div> <!-- price-wrap.// -->
-			</figcaption>
-		</div>
-	</div> <!-- col.// -->
-	<div class="col-md-3">
-		<div href="#" class="card card-product-grid">
-			<a href="#" class="img-wrap"> <img src="images/items/9.jpg"> </a>
-			<figcaption class="info-wrap">
-				<a href="#" class="title">Just another product name</a>
-				
-				<div class="rating-wrap">
-					<ul class="rating-stars">
-						<li style="width:80%" class="stars-active"> 
-							<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
-						</li>
-						<li>
-							<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> 
-						</li>
-					</ul>
-					<span class="label-rating text-muted"> 34 reviws</span>
-				</div>
-				<div class="price mt-1">$179.00</div> <!-- price-wrap.// -->
-			</figcaption>
-		</div>
-	</div> <!-- col.// -->
-</div> <!-- row.// -->
-
-</div> <!-- container .//  -->
-</section>
-<!-- ========================= SECTION CONTENT END// ========================= -->
-
-
-
-<!-- ========================= SECTION CONTENT ========================= -->
-<section class="section-content padding-bottom-sm">
-<div class="container">
-
-<header class="section-heading">
-	<a href="#" class="btn btn-outline-primary float-right">See all</a>
-	<h3 class="section-title">Recommended</h3>
-</header><!-- sect-heading -->
-
-<div class="row">
-	<div class="col-md-3">
-		<div href="#" class="card card-product-grid">
-			<a href="#" class="img-wrap"> <img src="images/items/1.jpg"> </a>
-			<figcaption class="info-wrap">
-				<a href="#" class="title">Just another product name</a>
-				<div class="price mt-1">$179.00</div> <!-- price-wrap.// -->
-			</figcaption>
-		</div>
-	</div> <!-- col.// -->
-	<div class="col-md-3">
-		<div href="#" class="card card-product-grid">
-			<a href="#" class="img-wrap"> <img src="images/items/2.jpg"> </a>
-			<figcaption class="info-wrap">
-				<a href="#" class="title">Some item name here</a>
-				<div class="price mt-1">$280.00</div> <!-- price-wrap.// -->
-			</figcaption>
-		</div>
-	</div> <!-- col.// -->
-	<div class="col-md-3">
-		<div href="#" class="card card-product-grid">
-			<a href="#" class="img-wrap"> <img src="images/items/3.jpg"> </a>
-			<figcaption class="info-wrap">
-				<a href="#" class="title">Great product name here</a>
-				<div class="price mt-1">$56.00</div> <!-- price-wrap.// -->
-			</figcaption>
-		</div>
-	</div> <!-- col.// -->
-	<div class="col-md-3">
-		<div href="#" class="card card-product-grid">
-			<a href="#" class="img-wrap"> <img src="images/items/4.jpg"> </a>
-			<figcaption class="info-wrap">
-				<a href="#" class="title">Just another product name</a>
-				<div class="price mt-1">$179.00</div> <!-- price-wrap.// -->
-			</figcaption>
-		</div>
-	</div> <!-- col.// -->
-</div> <!-- row.// -->
-
-</div> <!-- container .//  -->
-</section>
-<!-- ========================= SECTION CONTENT END// ========================= -->
-
-<!-- ========================= SECTION  ========================= -->
-<section class="section-name bg padding-y-sm">
-<div class="container">
-<header class="section-heading">
-	<h3 class="section-title">Our Brands</h3>
-</header><!-- sect-heading -->
-
-<div class="row">
-	<div class="col-md-2 col-6">
-		<figure class="box item-logo">
-			<a href="#"><img src="images/logos/logo1.png"></a>
-			<figcaption class="border-top pt-2">36 Products</figcaption>
-		</figure> <!-- item-logo.// -->
-	</div> <!-- col.// -->
-	<div class="col-md-2  col-6">
-		<figure class="box item-logo">
-			<a href="#"><img src="images/logos/logo2.png"></a>
-			<figcaption class="border-top pt-2">980 Products</figcaption>
-		</figure> <!-- item-logo.// -->
-	</div> <!-- col.// -->
-	<div class="col-md-2  col-6">
-		<figure class="box item-logo">
-			<a href="#"><img src="images/logos/logo3.png"></a>
-			<figcaption class="border-top pt-2">25 Products</figcaption>
-		</figure> <!-- item-logo.// -->
-	</div> <!-- col.// -->
-	<div class="col-md-2  col-6">
-		<figure class="box item-logo">
-			<a href="#"><img src="images/logos/logo4.png"></a>
-			<figcaption class="border-top pt-2">72 Products</figcaption>
-		</figure> <!-- item-logo.// -->
-	</div> <!-- col.// -->
-	<div class="col-md-2  col-6">
-		<figure class="box item-logo">
-			<a href="#"><img src="images/logos/logo5.png"></a>
-			<figcaption class="border-top pt-2">41 Products</figcaption>
-		</figure> <!-- item-logo.// -->
-	</div> <!-- col.// -->
-	<div class="col-md-2  col-6">
-		<figure class="box item-logo">
-			<a href="#"><img src="images/logos/logo2.png"></a>
-			<figcaption class="border-top pt-2">12 Products</figcaption>
-		</figure> <!-- item-logo.// -->
-	</div> <!-- col.// -->
-</div> <!-- row.// -->
-</div><!-- container // -->
-</section>
-<!-- ========================= SECTION  END// ========================= -->
-
-
-
-<!-- ========================= SECTION  ========================= -->
-<section class="section-name padding-y">
-<div class="container">
-
-<h3 class="mb-3">Download app demo text</h3>
-
-<a href="#"><img src="images/misc/appstore.png" height="40"></a>
-<a href="#"><img src="images/misc/appstore.png" height="40"></a>
-
-</div><!-- container // -->
-</section>
-<!-- ========================= SECTION  END// ======================= -->
-
-
-
 
 <!-- ========================= FOOTER ========================= -->
 <footer class="section-footer border-top bg">
