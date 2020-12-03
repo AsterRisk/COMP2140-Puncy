@@ -114,7 +114,7 @@
         $meas_id = 1;
     }
 
-    $sql = "insert into orders (state, date_placed, user_id, first_name, last_name, measurements_id, due_date, est_cost, providing_fabric, type) values ('Accepted', '" . $date_placed . "', " . $_SESSION['id'] . ", '" . $fname . "', '" . $lname . "', " . $meas_id . ", '" . $due_date . "', " . $est_cost . ", TRUE, '".$job_type."');";
+    $sql = "insert into orders (state, date_placed, user_id, first_name, last_name, measurements_id, due_date, est_cost, providing_fabric, type, contact_num, delivery_address) values ('Accepted', '" . $date_placed . "', " . $_SESSION['id'] . ", '" . $fname . "', '" . $lname . "', " . $meas_id . ", '" . $due_date . "', " . $est_cost . ", TRUE, '".$job_type."', " . $phone . ", " . $address . ");";
     $conn->prepare($sql);
     $conn->query($sql);
     

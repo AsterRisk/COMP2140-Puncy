@@ -40,6 +40,8 @@ create table orders
     first_name varchar (15) not null,
     last_name varchar (15) not null,
     state varchar(10) not null,
+    contact_num varchar(10),
+    delivery_address varchar(50),
     type varchar(12) not null,
     measurements_id int,
     media_addr varchar(40),

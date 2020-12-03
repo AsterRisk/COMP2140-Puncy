@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Login - Puncy's Store Online</title>
+	<title>Register - Puncy's Store Online</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -20,6 +20,15 @@
 	<link rel="stylesheet" type="text/css" href="../templates/Login_v1/css/util.css">
 	<link rel="stylesheet" type="text/css" href="../templates/Login_v1/css/main.css">
 <!--===============================================================================================-->
+    <!-- Datepicker JS and CSS provided by https://jqueryui.com/datepicker/-->
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="/resources/demos/style.css">
+        <link href="../templates/home_page/css/ui.css" rel="stylesheet" type="text/css"/>
+        <link href="../templates/home_page/css/responsive.css" rel="stylesheet" media="only screen and (max-width: 1200px)" />
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <srcipt src = "jquery-3.2.1.min.js"></srcipt>
+        <script src = "../templates/order_form/js/script.js"></script>
 </head>
 <body>
 	
@@ -31,21 +40,63 @@
 					<img src="../templates/Login_v1/images/img-01.png" alt="IMG">
 				</div>
                 
-				<form class="login100-form validate-form" method = "POST" action = "login-user.php">
+				<form class="login100-form validate-form" method = "POST" action = "register-user.php">
 					<span class="login100-form-title">
-						Login
+						Sign Up!
 					</span>
-
-					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-						<input class="input100" type="text" name="email" placeholder="Email">
+                    
+                    <div class="wrap-input100 validate-input">
+						<input class="input100" type="text" name="fname" placeholder="First Name" required = 'required'>
+						<span class="focus-input100"></span>
+						
+					</div>
+                    
+                    <div class="wrap-input100 validate-input">
+						<input class="input100" type="text" name="lname" placeholder="Last Name" required = 'required'>
+						<span class="focus-input100"></span>
+						
+					</div>
+                    
+                    <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+						<input class="input100" type="text" name="email" placeholder="Email" required = 'required'>
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-envelope" aria-hidden="true"></i>
 						</span>
 					</div>
+                    
+                    <div class="wrap-input100 validate-input">
+						<input class="input100" type="text" name="phone_num" placeholder="Phone Number" required = 'required'>
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+						</span>
+					</div>
+                    
+                    <div class="wrap-input100 validate-input">
+						<input class="input100" type="text" name="addr" placeholder="Address" required = 'required'>
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+						</span>
+					</div>
+                    
+                    <div class="wrap-input100 validate-input">
+
+                        <input class="input100 order-form-input datepicker" placeholder="DOB 'yyyy-mm-dd' " type="text" name = "dob" required = 'required'>
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+						</span>
+					</div>
 
 					<div class="wrap-input100 validate-input" data-validate = "Password is required">
-						<input class="input100" type="password" name="password" placeholder="Password">
+						<input class="input100" type="password" name="password" placeholder="Password" required = 'required'>
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-lock" aria-hidden="true"></i>
+						</span>
+					</div>
+                    
+                    <div class="wrap-input100 validate-input" data-validate = "Password is required">
+						<input class="input100" type="password" name="rep-password" placeholder="Confirm password" required = 'required'>
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-lock" aria-hidden="true"></i>
@@ -54,22 +105,15 @@
 					
 					<div class="container-login100-form-btn">
 						<button class="login100-form-btn">
-							Login
+							Sign Up!
 						</button>
 					</div>
 
-					<div class="text-center p-t-12">
-						<span class="txt1">
-							Forgot
-						</span>
-						<a class="txt2" href="#">
-							Username / Password?
-						</a>
-					</div>
+					
 
 					<div class="text-center p-t-136">
-						<a class="txt2" href="signup.php">
-							Create your Account
+						<a class="txt2" href="login.php">
+							Existing Users Sign In
 							<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
 						</a>
 					</div>

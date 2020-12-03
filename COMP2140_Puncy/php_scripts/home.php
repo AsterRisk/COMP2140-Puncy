@@ -275,7 +275,7 @@ $(document).ready(function() {
 		<div href="#" class="card card-product-grid">
 			<a href="#" class="img-wrap"> <img src="images/items/1.jpg"> </a>
 			<figcaption class="info-wrap">
-				<a href="#" class="title">Just another product name</a>
+				<a href="#" class="title">Regular Shirt</a>
 				
 				<div class="rating-wrap">
 					<ul class="rating-stars">
@@ -288,7 +288,7 @@ $(document).ready(function() {
 					</ul>
 					
 				</div>
-				<div class="price mt-1">$179.00</div> <!-- price-wrap.// -->
+				<div class="price mt-1">$2500-$5000</div> <!-- price-wrap.// -->
 			</figcaption>
 		</div>
 	</div> <!-- col.// -->
@@ -296,7 +296,7 @@ $(document).ready(function() {
 		<div href="#" class="card card-product-grid">
 			<a href="#" class="img-wrap"> <img src="images/items/2.jpg"> </a>
 			<figcaption class="info-wrap">
-				<a href="#" class="title">Some item name here</a>
+				<a href="#" class="title">Regular Pants</a>
 				
 				<div class="rating-wrap">
 					<ul class="rating-stars">
@@ -309,7 +309,7 @@ $(document).ready(function() {
 					</ul>
 					
 				</div>
-				<div class="price mt-1">$280.00</div> <!-- price-wrap.// -->
+				<div class="price mt-1">$2500-$5000</div> <!-- price-wrap.// -->
 			</figcaption>
 		</div>
 	</div> <!-- col.// -->
@@ -317,7 +317,7 @@ $(document).ready(function() {
 		<div href="#" class="card card-product-grid">
 			<a href="#" class="img-wrap"> <img src="images/items/3.jpg"> </a>
 			<figcaption class="info-wrap">
-				<a href="#" class="title">Great product name here</a>
+				<a href="#" class="title">Regular Shorts</a>
 				
 				<div class="rating-wrap">
 					<ul class="rating-stars">
@@ -330,7 +330,7 @@ $(document).ready(function() {
 					</ul>
 					
 				</div>
-				<div class="price mt-1">$56.00</div> <!-- price-wrap.// -->
+				<div class="price mt-1">$2500-$5000</div> <!-- price-wrap.// -->
 			</figcaption>
 		</div>
 	</div> <!-- col.// -->
@@ -338,7 +338,7 @@ $(document).ready(function() {
 		<div href="#" class="card card-product-grid">
 			<a href="#" class="img-wrap"> <img src="images/items/4.jpg"> </a>
 			<figcaption class="info-wrap">
-				<a href="#" class="title">Just another product name</a>
+				<a href="#" class="title">Regular Skirt</a>
 				
 				<div class="rating-wrap">
 					<ul class="rating-stars">
@@ -351,7 +351,7 @@ $(document).ready(function() {
 					</ul>
 					
 				</div>
-				<div class="price mt-1">$179.00</div> <!-- price-wrap.// -->
+				<div class="price mt-1">$2500-$5000</div> <!-- price-wrap.// -->
 			</figcaption>
 		</div>
 	</div> <!-- col.// -->
