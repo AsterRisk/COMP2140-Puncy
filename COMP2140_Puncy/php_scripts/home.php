@@ -60,6 +60,7 @@ $(document).ready(function() {
     <ul class="navbar-nav d-none d-md-flex mr-auto">
 		<li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
 		<li class="nav-item"><a class="nav-link" href="place_order.php">Make a new Order!</a></li>
+        <li class="nav-item"><a class="nav-link" href="view_order_hist.php?user_id=<?php echo $_SESSION['id']; ?>">View my order history!</a></li>
     </ul>
     <ul class="navbar-nav">
 		<li  class="nav-item"><a href="#" class="nav-link"> Call: <?php echo $puncy_data['tele_num']?> </a></li>

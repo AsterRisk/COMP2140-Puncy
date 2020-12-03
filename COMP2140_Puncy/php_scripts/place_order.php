@@ -29,11 +29,13 @@
                             {
                                 $('#existing-measures').hide();
                                 $('#new-measures').show();
+                                $('#set-meas-name').attr("required", true);
                             }
                             else
                             {
                                 $('#existing-measures').show();
                                 $('#new-measures').hide();
+                                $('#set-meas-name').attr("required", false);
                             }
 
                         }
@@ -47,35 +49,56 @@
                     $("#job-type").change(function()
                         {
                             var val = parseInt($(this).children("option:selected").val());
-                            if((val >=  11) && (val <= 15))
+                            if((val >=  12) && (val <= 16))
                             {
                                 $('#pants').show().siblings().hide();
+                                $('#pants').children().children().attr("required", true);
+                                $('#pants').siblings().children().children().attr("required", false);
                                 $('#set-meas-name').show();
+                                $('#appt-needed').show();
+                                $('#set-meas-name').attr("required", true);
                             }
-                            if((val >=  21) && (val <= 25))
+                            if((val >=  22) && (val <= 26))
                             {
                                 $('#blouses').show().siblings().hide();
+                                $('#blouses').children().children().attr("required", true);
                                 $('#set-meas-name').show();
+                                $('#appt-needed').show();
+                                $('#blouses').siblings().children().children().attr("required", false);
+                                $('#set-meas-name').attr("required", true);
                             }
-                            if((val >=  1) && (val <= 5))
+                            if((val >=  2) && (val <= 6))
                             {
                                 $('#shirts').show().siblings().hide();
+                                $('#shirts').children().children().attr("required", true);
                                 $('#set-meas-name').show();
+                                $('#appt-needed').show();
+                                $('#shirts').siblings().children().children().attr("required", false);
+                                $('#set-meas-name').attr("required", true);
                             }
-                            if((val >=  16) && (val <= 20))
+                            if((val >=  17) && (val <= 21))
                             {
                                 $('#skirts').show().siblings().hide();
+                                $('#skirts').children().children().attr("required", true);
                                 $('#set-meas-name').show();
+                                $('#appt-needed').show();
+                                $('#skirts').siblings().children().children().attr("required", false);
+                                $('#set-meas-name').attr("required", true);
                             }
-                            if((val >=  6) && (val <= 10))
+                            if((val >=  7) && (val <= 11))
                             {
                                 $('#shorts').show().siblings().hide();
+                                $('#shorts').children().children().attr("required", true);
                                 $('#set-meas-name').show();
+                                $('#appt-needed').show();
+                                $('#shorts').siblings().children().children().attr("required", false);
+                                $('#set-meas-name').attr("required", true);
                             }
                             if(val == 0)
                             {
                                 $('#undecided').show().siblings().hide();
                                 $('#set-meas-name').show();
+                                $('#appt-needed').show();
                             }
                             var type = ($(this).children("option:selected").attr('name'));
                             console.log(type);
@@ -92,6 +115,10 @@
             $sql = "select * from users where user_id = " . $_SESSION['id'] . ";";
             $conn->prepare($sql);
             $user_data = $conn->query($sql)->fetch_assoc();
+            $sql = "select * from orders where order_id = " . $_GET['temp'] . ";";
+            $conn->prepare($sql);
+            $template = $conn->query($sql)->fetch_assoc();
+            
         ?>
         <div style = "background-color:#3167eb;width=100%">
             <div class="col-lg-4 col-sm-6 col-12" >
@@ -129,14 +156,29 @@
                         </div>
                         <div class="col-12 col-sm-6">
                         <?php
-                            $input = '<input class="order-form-input" name = "fname" value="'.ucfirst(strtolower($user_data['first_name'])).'">';
+                            if($template)
+                            {
+                                $input = '<input class="order-form-input" name = "fname" value="'.ucfirst(strtolower($template['first_name'])).'" required = "required"/>';
+                            }
+                            else
+                            {
+                                $input = '<input class="order-form-input" name = "fname" value="'.ucfirst(strtolower($user_data['first_name'])).'" required = "required"/>';
+                            }
                             echo $input;
                         ?>
 
                         </div>
                         <div class="col-12 col-sm-6 mt-2 mt-sm-0">
                           <?php
-                            $input = '<input class="order-form-input" name = "lname" value="'.ucfirst(strtolower($user_data['last_name'])).'">';
+                            if($template)
+                            {
+                                $input = '<input class="order-form-input" name = "lname" value="'.ucfirst(strtolower($template['last_name'])).'" required/>';
+                            
+                            }
+                            else
+                            {
+                                $input = '<input class="order-form-input" name = "lname" value="'.ucfirst(strtolower($user_data['last_name'])).'" required/>';
+                            }
                             echo $input;
                           ?>
                         </div>
@@ -155,10 +197,21 @@
                               $jobs = $conn->query($sql);
                               foreach($jobs as $job)
                               {
-
-                                  $option = "<option value = ".$job['preset_id']." name = ".$job['type'].">" .$job['type']. "</option>";
+                                  if($template)
+                                  {
+                                      if($template['type'] == $job['type'])
+                                      {
+                                          $option = "<option value = ".$job['preset_id']." name = ".$job['type']." selected = 'selected'>" .$job['type']. "</option>";
+                                      }
+                                      else
+                                      {
+                                          $option = "<option value = ".$job['preset_id']." name = ".$job['type'].">" .$job['type']. "</option>";
+                                      }
+                                  }
+                                  
                                   echo $option;
                               }
+                              
                             ?>
                           </select>
                           <input id = "job_type" name = "job_type" type = "text" value = "blank" hidden/>
@@ -172,7 +225,21 @@
                         <div class="row mt-3 mx-4">
                             <div class="col-12">
                               <div class="form-check">
-                                <input type="checkbox" class="form-check-input" name="new-measurements" id="new-measurements" checked value = 1>
+                                <?php
+                                    if($template['measurement_id'] == 1)
+                                    {
+                                        ?>
+                                        <input type="checkbox" class="form-check-input" name="new-measurements" id="new-measurements" checked value = 1>
+                                <?php
+                                    }
+                                    else
+                                    {
+                                        ?>
+                                        <input type="checkbox" class="form-check-input" name="new-measurements" id="new-measurements" value = 1>
+                                  <?php
+                                    }
+                                ?>
+                                
                                 <label for="validation" class="form-check-label">Use new Measurements?</label>
                               </div>
                             </div>
@@ -190,13 +257,28 @@
                                   $option = "<option value = '".$measure['measurement_id']."'>" .$measure['name']. "</option>";
                                   echo $option;
                               }
+                              
                             ?>
                             </select>
                         </div>
                         <div class = "col-12" id = "new-measures">
                             <div id = "set-meas-name">
                                 <div class="col-12 col-sm-6">
-                                    <input class="order-form-input" name = "meas-name" id = "meas-name" placeholder = "What would you like to save this preset as?"/>
+                                    <?php
+                                        if($template)
+                                        {
+                                            ?>
+                                            <input class="order-form-input" name = "meas-name" id = "meas-name" placeholder = "What would you like to save this preset as?"/>
+                                    <?php
+                                        }
+                                        else
+                                        {
+                                            ?>
+                                            <input class="order-form-input" name = "meas-name" id = "meas-name" value = "<?php ?>"/>
+                                    <?php
+                                        }
+                                    ?>
+                                    
                                 </div>
                             </div>
                             <div id = "undecided">
@@ -483,6 +565,14 @@
                                     <input class="order-form-input" name = "p_round-knee"/>
                                 </div>
                             </div>
+                            <div class="row mt-3 mx-4">
+                            <div class="col-12">
+                              <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="appt-needed" id="appt-needed" checked value = 1>
+                                <label for="validation" class="form-check-label">Do you need an appointment to find out your measurements?</label>
+                              </div>
+                            </div>
+                        </div>
                         </div>
                       </div>
 

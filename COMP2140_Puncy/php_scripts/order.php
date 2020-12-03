@@ -14,6 +14,7 @@
     $phone = $_POST['phone'];
     $date_placed = date("Y/m/d");
     $job_type = $_POST['job_type'];
+    $appt_needed = (isset($_POST['appt-needed']) && ($_POST['appt-needed']== 1));
     $sql = "select garment_price from job_presets where type = '" . $job_type . "';";
     $conn->prepare($sql);
     $base_price = $conn->query($sql)->fetch_assoc()['garment_price'];
@@ -108,12 +109,16 @@
     {
         $meas_id = $_POST['measurement_id'];
     }
+    if($appt_needed)
+    {
+        $meas_id = 1;
+    }
 
     $sql = "insert into orders (state, date_placed, user_id, first_name, last_name, measurements_id, due_date, est_cost, providing_fabric, type) values ('Accepted', '" . $date_placed . "', " . $_SESSION['id'] . ", '" . $fname . "', '" . $lname . "', " . $meas_id . ", '" . $due_date . "', " . $est_cost . ", TRUE, '".$job_type."');";
     $conn->prepare($sql);
     $conn->query($sql);
     
-
+    header("Location: home.php");
 	
 
     
