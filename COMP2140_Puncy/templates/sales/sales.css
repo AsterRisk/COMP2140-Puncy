@@ -1,0 +1,30 @@
+th{
+    background-color: rgb(30, 144, 255);
+
+}
+
+table{
+    margin-top:100px;
+    width:100%;
+}
+
+table, th, td {
+    border: 2px solid rgb(0, 0, 0);
+  }
+
+caption{
+    padding-bottom: 20px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 22px;
+    color: rgb(0, 139, 139) ;
+    font-weight: bold;
+}
+td{
+    text-align: center;
+}
+td:nth-of-type(odd){
+    background-color:#eeeff2;
+}
+td:nth-of-type(even){
+    background-color:#dfe1e7;
+}

@@ -17,6 +17,7 @@
     $appt_needed = (isset($_POST['appt-needed']) && ($_POST['appt-needed']== 1));
     $sql = "select garment_price from job_presets where type = '" . $job_type . "';";
     $conn->prepare($sql);
+    echo $sql;
     $base_price = $conn->query($sql)->fetch_assoc()['garment_price'];
     $bring_fab = (isset($_POST['bringing-fabric']) && ($_POST['bringing-fabric']== 1));
     if($bring_fab)
@@ -114,11 +115,60 @@
         $meas_id = 1;
     }
 
-    $sql = "insert into orders (state, date_placed, user_id, first_name, last_name, measurements_id, due_date, est_cost, providing_fabric, type, contact_num, delivery_address) values ('Accepted', '" . $date_placed . "', " . $_SESSION['id'] . ", '" . $fname . "', '" . $lname . "', " . $meas_id . ", '" . $due_date . "', " . $est_cost . ", TRUE, '".$job_type."', " . $phone . ", " . $address . ");";
+    $sql = "insert into orders (state, date_placed, user_id, first_name, last_name, measurements_id, due_date, est_cost, providing_fabric, type, contact_num, delivery_address) values ('Accepted', '" . $date_placed . "', " . $_SESSION['id'] . ", '" . $fname . "', '" . $lname . "', " . $meas_id . ", '" . $due_date . "', " . $est_cost . ", TRUE, '".$job_type."', '" . $phone . "', '" . $address . "');";
     $conn->prepare($sql);
     $conn->query($sql);
-    
-    header("Location: home.php");
+    echo $sql;
+
+    $sql = "select * from users where user_id = " . $_SESSION['id'] . ";";
+    $conn->prepare($sql);
+    $email = $conn->query($sql)->fetch_assoc()['email'];
+    $fname = $conn->query($sql)->fetch_assoc()['first_name'];
+    $sql = "select max(order_id) from orders;";
+    $conn->prepare($sql);
+    $order_id = $conn->query($sql)->fetch_assoc()['max(order_id)'];
+    $admin = "puncysstore@gmail.com"; 
+    $subject = "New Order from ". $fname."!";
+    $subject_cli = "Order Confirmation from Puncy's Store";
+    $headers = "From: " . $admin . "\r\n";
+    $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+    $msg = "<html>";
+    $msg .= "<head>";
+    $msg .= '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />';
+    $msg .= '<title>Order Confirmation from Puncy\'s Store</title>';
+    $msg .= '<meta name="viewport" content="width=device-width, initial-scale=1.0"/>';
+    $msg .= "</head>";
+    $msg .= "<body>";
+    $msg .= '<table align = "center" role="presentation" border="1" cellpadding="0" style="border-collapse: collapse;" cellspacing="0" width="100%">';
+    $msg .= '<tr>';
+    $msg .= '<td>';
+    $msg .= '<h1 style="margin: 0;">Hello!</h1>';
+    $msg .= '</td>';
+    $msg .= '</tr>';
+    $msg .= '<tr>';
+    $msg .= '<td>';
+    $msg .= '<p style="margin: 0;">Here are your order details:</p>';
+    $msg .= '</td>';
+    $msg .= '</tr>';
+    $msg .= '<tr>';
+    $msg .= '<td>ID</td><td>Date</td><td>Type of Job</td><td>Contact Number</td><td>Estimated Cost</td>';
+    $msg .= '</tr>';
+    $msg .= "<tr>";
+    $msg .= '<td>'.$order_id.'</td><td>'.$date_placed.'</td><td>'.$type.'</td><td>'.$phone.'</td><td>'.$est_cost.'</td>';
+    $msg .= '</table>';
+    $msg .= '</body>';
+    $msg .= "</html>";
+
+    mail($email, $subject_cli, $msg, $headers);
+    mail($admin, $subject, $msg, $headers);
+    ?>
+
+    <script>
+        alert("Your order has been confirmed!");
+    </script>
+<?php
+    header("Location: confirm_order.php");
+    //header("Location: confirm_order.php");
 	
 
     

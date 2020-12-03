@@ -691,17 +691,17 @@
                                 {
                                     if ($template['delivery_address'])
                                     {
-                                        $input = '<input class="order-form-input" name = "addr" value = "'.$template['contact_num'].'">';
+                                        $input = '<input class="order-form-input" name = "phone" value = "'.$template['contact_num'].'">';
                                     }
                                     else
                                     {
-                                        $input = '<input class="order-form-input" name = "addr" value = "'.$user_data['tele_num'].'">';
+                                        $input = '<input class="order-form-input" name = "phone" value = "'.$user_data['tele_num'].'">';
                                     }
                                 }
                             }
                             else
                             {
-                                $input = '<input class="order-form-input" name = "addr" value = "'.$user_data['tele_num'].'">';
+                                $input = '<input class="order-form-input" name = "phone" value = "'.$user_data['tele_num'].'">';
                             }
                             
                             echo $input;
@@ -728,7 +728,6 @@
                     </div>
                   </div>
                 </div>
-          
         </form>
     </body>
 </html>

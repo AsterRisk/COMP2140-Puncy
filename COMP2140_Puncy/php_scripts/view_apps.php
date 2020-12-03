@@ -75,24 +75,18 @@
                     <?php
                         if($_SESSION['id'] == 1)
                         {
-                            ?>
-                            <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
-                            <li class="nav-item"><a class="nav-link" href="home.php">Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="view_apps.php">View Appointments</a></li>
-                            <li class="nav-item"><a class="nav-link" href="view_order_hist.php?user_id=<?php echo $_SESSION['id']; ?>">View all orders!</a></li>
-                    <?php
+                            
+                            echo '<li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>';
+                            echo '<li class="nav-item"><a class="nav-link" href="home.php">Home</a></li>';
+                            echo '<li class="nav-item"><a class="nav-link" href="view_apps.php">View Appointments</a></li>';
+                            echo '<li class="nav-item"><a class="nav-link" href="sales.php">View Sales</a></li>';
+                            echo '<li class="nav-item"><a class="nav-link" href="view_order_hist.php?user_id=<?php echo $_SESSION[\'id\']; ?>">View all orders!</a></li>';
                         }
                         else
                         {
-                            ?>
-                            <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
-                            <li class="nav-item"><a class="nav-link" href="home.php">Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="place_order.php">Make a new Order!</a></li>
-                            <li class="nav-item"><a class="nav-link" href="view_order_hist.php?user_id=<?php echo $_SESSION['id']; ?>">View my order history!</a></li>
-                    <?php
+                            header("Location: home.php");
                         }
                     ?>
-                    
                 </ul>
                 <ul class="navbar-nav">
                     <li  class="nav-item"><a href="#" class="nav-link"> Call: <?php echo $puncy_data['tele_num']?> </a></li>
@@ -144,7 +138,7 @@
                     <div class="col-md-12">
                         <nav>
                             <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#" role="tab" aria-controls="nav-home" aria-selected="true">Order History</a>
+                                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#" role="tab" aria-controls="nav-home" aria-selected="true">Appointments</a>
                             </div>
                         </nav>
                         <div class="tab-content" id="nav-tabContent">
@@ -152,26 +146,10 @@
                                 <table class="table" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Order ID</th>
                                             <th>First Name</th>
                                             <th>Last Name</th>
-                                            <th>State</th>
-                                            <th>Type</th>
-                                            <th>Date Placed</th>
-                                            <th>Due Date</th>
-                                            <th>Estimated Cost</th>
-                                            <?php
-                                                if($_SESSION['id']==1)
-                                                {
-                                                    $row = '<th>Generate Bill</th>';
-                                                }
-                                                else
-                                                {
-                                                    $row = '<th>Replay Order</th>';
-                                                }
-                                                echo $row;
-                                            ?>
-                                            
+                                            <th>Date</th>
+                                            <th>Time</th>
                                         </tr>
                                     </thead>
                                     <!--<tbody>
@@ -192,41 +170,23 @@
                                         </tr>
                                     </tbody>-->
                                     <?php
-                                        if($_SESSION['id'] == 1)
-                                        {
-                                            $sql = "select * from orders;";
-                                        }
-                                        else
-                                        {
-                                            $sql = "select * from orders where user_id = ". $_SESSION['id'] .";";
-                                        }
+                                        $sql = "select * from appointments;";
                                         
                                         $conn->prepare($sql);
-                                        $orders = $conn->query($sql);
-                                        foreach ($orders as $order)
+                                        $apps = $conn->query($sql);
+                                        foreach ($apps as $app)
                                         {
+                                            $sql = "select * from users where user_id = " . $app['user_id'] . ";";
+                                            $conn->prepare($sql);
+                                            $user = $conn->query($sql)->fetch_assoc();
                                             ?>
                                             <tbody>
                                                 <tr>
-                                                    <td><?php echo $order['order_id']; ?></td>
-                                                    <td><?php echo $order['first_name']; ?></td>
-                                                    <td><?php echo $order['last_name']; ?></td>
-                                                    <td><?php echo $order['state']; ?></td>
-                                                    <td><?php echo $order['type']; ?></td>
-                                                    <td><?php echo $order['date_placed']; ?></td>
-                                                    <td><?php echo $order['due_date']; ?></td>
-                                                    <td><?php echo $order['est_cost']; ?></td>
-                                                    <?php
-                                                        if($_SESSION['id'] == 1)
-                                                        {
-                                                            $btn = '<td><a href = "bill.php?order_id='.$order['order_id'] .'"><button>Generate Bill</button></a></td>';
-                                                        }
-                                                        else
-                                                        {
-                                                            $btn = '<td><a href = "place_order.php?temp=<'.$order['order_id'].'?>"><button>Replay</button></a></td>';
-                                                        }
-                                                        echo $btn;
-                                                    ?>
+                                                    
+                                                    <td><?php echo $user['first_name']; ?></td>
+                                                    <td><?php echo $user['last_name']; ?></td>
+                                                    <td><?php echo $app['app_date']; ?></td>
+                                                    <td><?php echo $app['app_time']; ?></td>
                                                     
                                                     <!-- View an order's details -->
                                                 </tr>

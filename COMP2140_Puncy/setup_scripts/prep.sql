@@ -96,15 +96,16 @@ create table bills
     bill_id int not null AUTO_INCREMENT,
     user_id int not null,
     order_id int not null,
-    job_type_id int not null, 
+    job_type varchar(12), 
     fabric_cost numeric not null,
     labour_cost numeric not null,
+    total_cost numeric not null,
     date_completed Date not null,
     primary key (bill_id)
 );
 
 insert into users (user_id, first_name, last_name, home_address, tele_num, email, clearance) values (0, "PUNCY", "ADMIN", "N/A", "87688888888", "puncysstoreadmin@gmail.com", 1);
-insert into logins (user_id, email, password_hash, salt) values (0, "puncysstoreadmin@gmail.com", '321d50fbd86dcbad1a0990e7c5974b3d573bd0f1d5208e24aa1007d7461e7869', 1234);
+insert into logins (user_id, email, password_hash, salt) values (1, "puncysstoreadmin@gmail.com", '321d50fbd86dcbad1a0990e7c5974b3d573bd0f1d5208e24aa1007d7461e7869', 1234);
 insert into measurements (user_id, name) values (0, "Appt. Needed.");
 
 insert into job_presets (type, garment_price) values ("dummy", 0);

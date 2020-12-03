@@ -40,6 +40,8 @@ create table orders
     first_name varchar (15) not null,
     last_name varchar (15) not null,
     state varchar(10) not null,
+    contact_num varchar(10),
+    delivery_address varchar(50),
     type varchar(12) not null,
     measurements_id int,
     media_addr varchar(40),
@@ -94,15 +96,16 @@ create table bills
     bill_id int not null AUTO_INCREMENT,
     user_id int not null,
     order_id int not null,
-    job_type_id int not null, 
+    job_type varchar(12), 
     fabric_cost numeric not null,
     labour_cost numeric not null,
+    total_cost numeric not null,
     date_completed Date not null,
     primary key (bill_id)
 );
 
 insert into users (user_id, first_name, last_name, home_address, tele_num, email, clearance) values (0, "PUNCY", "ADMIN", "N/A", "87688888888", "puncysstoreadmin@gmail.com", 1);
-insert into logins (user_id, email, password_hash, salt) values (0, "puncysstoreadmin@gmail.com", '321d50fbd86dcbad1a0990e7c5974b3d573bd0f1d5208e24aa1007d7461e7869', 1234);
+insert into logins (user_id, email, password_hash, salt) values (1, "puncysstoreadmin@gmail.com", '321d50fbd86dcbad1a0990e7c5974b3d573bd0f1d5208e24aa1007d7461e7869', 1234);
 insert into measurements (user_id, name) values (0, "Appt. Needed.");
 
 insert into job_presets (type, garment_price) values ("dummy", 0);
@@ -166,103 +169,103 @@ insert into measurements (user_id, job_type, name, leng, waist, hip, bust, sleev
 insert into measurements (user_id, job_type, name, leng, waist, hip, bust, sleeve, bicep, armhole, neck, shoulder, across_back, bust_point) values (0, "Blouse-L", "Default", 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 insert into measurements (user_id, job_type, name, leng, waist, hip, bust, sleeve, bicep, armhole, neck, shoulder, across_back, bust_point) values (0, "Blouse-XL", "Default", 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("REID", "MEYERS", "140 MCLEAN ROND-POINT", "8766106442", "reid.meyers@yahoo.com", 2, "1985/11/24");
-insert into logins (user_id, email, password_hash, salt) values (1, "reid.meyers@yahoo.com", "1645954ee5a4a159719281b2d7b045a2e24ef898440ec9cd3215f2dbdc6e6ad0", 9298);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("FOSTER", "VILLARREAL", "366 HARDING HEATH", "8761077593", "foster.villarreal@hotmail.com", 2, "1989/5/3");
-insert into logins (user_id, email, password_hash, salt) values (2, "foster.villarreal@hotmail.com", "8104881e8e690dc2bd4ba8348a05cf5ae8f678dec5685a9a282478dd6081f7d8", 2747);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("ALI", "HUTCHINSON", "361 ENGLISH MOOR", "8761879383", "ali.hutchinson@proton-mail.com", 2, "1988/7/13");
-insert into logins (user_id, email, password_hash, salt) values (3, "ali.hutchinson@proton-mail.com", "2ff767f5379d12228aa78dde8a2773b64987ce4701cc24f351a12a0b338cc6a4", 1009);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("YAMILETH", "LITTLE", "62 COLLIER GLENWAY", "8768113056", "yamileth.little@organization.business.com", 2, "1964/11/17");
-insert into logins (user_id, email, password_hash, salt) values (4, "yamileth.little@organization.business.com", "d23c5d2511c6957bc3d3261bd6697f888a31e48bc8489d4a36d07d6864e06cea", 9747);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("ANTOINETTE", "TAPIA", "387 NICHOLSON PARKWAY", "8769667218", "antoinette.tapia@parliament.gov.jm", 2, "1967/11/13");
-insert into logins (user_id, email, password_hash, salt) values (5, "antoinette.tapia@parliament.gov.jm", "d67a29e90d0663129d978f177f6909aa73549b49070c4ca6f806027dedbdece9", 2296);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("MYLAH", "BENTLEY", "161 CLAY CLIFFS", "8768528465", "mylah.bentley@yahoo.com", 2, "1984/4/2");
-insert into logins (user_id, email, password_hash, salt) values (6, "mylah.bentley@yahoo.com", "feaecbae793a8b5d0178e9780b8d4b3466fad136e41281c676a01f63e289f484", 7851);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("RILEY", "PAUL", "440 BUCKLEY STREET", "8766917813", "riley.paul@yahoo.com", 2, "1971/2/23");
-insert into logins (user_id, email, password_hash, salt) values (7, "riley.paul@yahoo.com", "83cd2118324a25d694e3092bbaffcbcf755e0b5dfea7359e6351ee7e0b719411", 5373);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("BRAYDON", "SUMMERS", "473 HURLEY KEEP", "8764849689", "braydon.summers@school.address.edu", 2, "1969/6/21");
-insert into logins (user_id, email, password_hash, salt) values (8, "braydon.summers@school.address.edu", "02ff82af52b8f89f1714ad3c36539f71ea1179f74074e6b3f71423a59659a8b5", 1653);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("BRAIN", "WRIGHT", "460 MIDDLETON TRAIL", "8762207696", "brain.wright@high_comiision.gov.uk", 2, "1995/2/25");
-insert into logins (user_id, email, password_hash, salt) values (9, "brain.wright@high_comiision.gov.uk", "77c768c39be3967859bb513a945c549fd76d6f68a94fdb1d510462c445fb979c", 8966);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("AMELIA", "MAXWELL", "222 ARROYO BLUFF", "8767449557", "amelia.maxwell@yahoo.com", 2, "1988/12/15");
-insert into logins (user_id, email, password_hash, salt) values (10, "amelia.maxwell@yahoo.com", "ff9374ecfb31b480fa58f3c9bd12fe186b3934dad054b64334e70e9161167a11", 7701);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("CELIA", "ALEXANDER", "9 BARAJAS MOUNTAIN", "8765093848", "celia.alexander@team.group.com", 2, "1966/9/15");
-insert into logins (user_id, email, password_hash, salt) values (11, "celia.alexander@team.group.com", "bef0f5e6fddb71b0583fac5ba306c6eaaab4103a7042f42a67503d218b13d731", 6998);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("BRIGGS", "STEWART", "329 SPENCE INLET", "8765182610", "briggs.stewart@outlook.com", 2, "1988/8/15");
-insert into logins (user_id, email, password_hash, salt) values (12, "briggs.stewart@outlook.com", "fa3bdd48c1de506e9c439ac853213d1bd97d53ae5f77bbb08dfcfd77b9d50d59", 723);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("BRIANNA", "STANLEY", "163 GATES BRIDGE", "8765151018", "brianna.stanley@church.religion.com", 2, "1974/7/15");
-insert into logins (user_id, email, password_hash, salt) values (13, "brianna.stanley@church.religion.com", "2594fab607538bef33032c76b3e16dce9daccbe034514a9360e4efc6c12bc6fa", 9345);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("NIXON", "ARROYO", "307 MEZA FALL", "8769201328", "nixon.arroyo@proton-mail.com", 2, "1966/10/12");
-insert into logins (user_id, email, password_hash, salt) values (14, "nixon.arroyo@proton-mail.com", "65d8da1a3bb4922384ed6bfd64d56a5206823e482600e6163115ea187028256c", 3530);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("HOMER", "HODGE", "202 TRAVIS SHOAL", "8766286775", "homer.hodge@gmail.com", 2, "1970/10/5");
-insert into logins (user_id, email, password_hash, salt) values (15, "homer.hodge@gmail.com", "c4f4ada623ca5e2d562bda662050559806c62294ef3ffa6801182c48937f6ff2", 5622);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("IVAN", "SOLOMON", "392 MOLINA IMPASSE", "8762429349", "ivan.solomon@gmail.com", 2, "1979/11/21");
-insert into logins (user_id, email, password_hash, salt) values (16, "ivan.solomon@gmail.com", "35b29a310a374d9400998c94420768426e5da88709ceb62b1e94ec19c13488ba", 2627);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("DENISE", "CONNER", "108 MCCLURE PARADE", "8766065837", "denise.conner@parliament.gov.jm", 2, "1964/1/10");
-insert into logins (user_id, email, password_hash, salt) values (17, "denise.conner@parliament.gov.jm", "2b95ae7d289cee9ae66654955b453178400874a69c84603715b712ca01553c98", 3828);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("FINLEY", "PRINCE", "179 WANG RUN", "8760171032", "finley.prince@school.address.edu", 2, "1991/12/4");
-insert into logins (user_id, email, password_hash, salt) values (18, "finley.prince@school.address.edu", "cf56a4ad39985464df970fb61a46509f5d41c7b9e024c531fb14104c66ff087d", 847);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("REMY", "CORDOVA", "105 MCKAY WAY", "8766973414", "remy.cordova@hotmail.com", 2, "1976/11/27");
-insert into logins (user_id, email, password_hash, salt) values (19, "remy.cordova@hotmail.com", "b82f0e2024d334f4ef6326b88cef3a3d25d198c7af25b418202e153229718db6", 9847);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("EMILY", "LOPEZ", "283 AYERS ABBEY", "8761671021", "emily.lopez@gmail.com", 2, "1978/12/12");
-insert into logins (user_id, email, password_hash, salt) values (20, "emily.lopez@gmail.com", "e7e40e6585434b9897b8926d154de2302965a0d7ae12ad95e7a1b1e1dfdfb35c", 2);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("LEANDRO", "FRENCH", "61 VAZQUEZ EXTENSION", "8762629705", "leandro.french@company.mail.com", 2, "1973/12/9");
-insert into logins (user_id, email, password_hash, salt) values (21, "leandro.french@company.mail.com", "a06540a8f7bed90c55f1a90392a0788abcc519c05048107c93d6218af68f002c", 5041);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("THERESE", "CHAPMAN", "310 CLAYTON NOT", "8764686455", "therese.chapman@de.trash.co", 2, "2001/6/16");
-insert into logins (user_id, email, password_hash, salt) values (22, "therese.chapman@de.trash.co", "882485938826993031d5c4f8b395ad539835cd01dbceb080a1dd458171d9d5fa", 9038);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("LAILA", "MICHAEL", "243 MCCALL MILL", "8763559146", "laila.michael@hotmail.com", 2, "1972/4/23");
-insert into logins (user_id, email, password_hash, salt) values (23, "laila.michael@hotmail.com", "3c0b54754ea9bef771552c620b49c1a3ceeb84c061c56d2f1e2bd238009f1bb3", 7872);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("ARIAN", "JAMES", "394 DODSON EXTENSION", "8761401839", "arian.james@high_comiision.gov.uk", 2, "1974/9/7");
-insert into logins (user_id, email, password_hash, salt) values (24, "arian.james@high_comiision.gov.uk", "c0a3edee7a847ba57c79f51eafe8d745fb23cf225a72ab1a17f0ab1b31f6e9ed", 6557);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("GABRIELLA", "GILLESPIE", "81 SHAH PINE", "8764264345", "gabriella.gillespie@outlook.com", 2, "1999/12/26");
-insert into logins (user_id, email, password_hash, salt) values (25, "gabriella.gillespie@outlook.com", "6b52be9d8da811ee23827d5cd2f1a5201f65ca9a8287fdb43479218bb453f215", 3123);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("JAVON", "MONTGOMERY", "478 BARRON VILLAGE", "8765852675", "javon.montgomery@high_comiision.gov.uk", 2, "1989/7/20");
-insert into logins (user_id, email, password_hash, salt) values (26, "javon.montgomery@high_comiision.gov.uk", "7d771904e193d87192b5bbd83690db27f09f3dc02bbad4cd307c079bd4e4785a", 3868);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("MARCOS", "FRANK", "10 BRUCE ROW", "8769176226", "marcos.frank@gmail.com", 2, "1978/6/28");
-insert into logins (user_id, email, password_hash, salt) values (27, "marcos.frank@gmail.com", "0a063060231f7b84a884c3dbbea239ce85a95cd0b624907d251422f671b77e4f", 4767);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("JAYNE", "FARLEY", "361 HENSLEY RANGEE", "8764440446", "jayne.farley@outlook.com", 2, "1983/12/3");
-insert into logins (user_id, email, password_hash, salt) values (28, "jayne.farley@outlook.com", "d11a597f6b9887ff825d39a55e34a65af50f95c947ef85d6f0d25dfc8476596f", 1048);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("SHMUEL", "NORRIS", "490 FOLEY LINE", "8763934497", "shmuel.norris@canadia.gov.ca", 2, "1984/2/8");
-insert into logins (user_id, email, password_hash, salt) values (29, "shmuel.norris@canadia.gov.ca", "b3b4cb35ba69691635a4e6a590e56165fe6385548ab14cfc975565e31cbe7a0d", 2558);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("ROBERTO", "FLORES", "33 MARSH PRAIRIE", "8761654063", "roberto.flores@school.address.edu", 2, "1977/9/18");
-insert into logins (user_id, email, password_hash, salt) values (30, "roberto.flores@school.address.edu", "5e4030878f0b6f5d04921c52602246eace380e33a548aab64e193d226c4baab9", 6674);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("CLAUDE", "RIVAS", "136 EIGTH COVE", "8763955738", "claude.rivas@live.com", 2, "1973/7/5");
-insert into logins (user_id, email, password_hash, salt) values (31, "claude.rivas@live.com", "7c0559b69cacb5377b7663c4f2551b70b209eca58087a3e097049e6c1f6b3f75", 8864);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("KIM", "BUSH", "269 DAUGHERTY GATEWAY", "8760970868", "kim.bush@parliament.gov.jm", 2, "1984/1/2");
-insert into logins (user_id, email, password_hash, salt) values (32, "kim.bush@parliament.gov.jm", "e5e16f2df40e57d209e6c76ff987df162c456fc695a57b5c1347536e35080eb6", 9801);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("GUILLERMO", "CLAYTON", "416 BERNAL RUN", "8764375945", "guillermo.clayton@company.mail.com", 2, "1975/10/17");
-insert into logins (user_id, email, password_hash, salt) values (33, "guillermo.clayton@company.mail.com", "6fe080d1f9a25af48c550973962d31f7e25f94ce9a4c203fdff900da5b787726", 6078);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("ZECHARIAH", "PACHECO", "153 SOLIS OVERPASS", "8760166931", "zechariah.pacheco@de.trash.co", 2, "1976/7/9");
-insert into logins (user_id, email, password_hash, salt) values (34, "zechariah.pacheco@de.trash.co", "08d16f2629e62a9f990ae3266e73944735ea290937cf9091b1bfb4cd6b8f188c", 7437);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("DOMINGO", "MORTON", "222 HOOD TRAIL", "8767976824", "domingo.morton@hotmail.com", 2, "1985/8/26");
-insert into logins (user_id, email, password_hash, salt) values (35, "domingo.morton@hotmail.com", "a9e5fc8192b435623480b06a93d6b610765bd3afcdfaed02cae6b8dc76adf99b", 4970);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("JANINE", "ARMSTRONG", "487 SAVAGE CAUSEWAY", "8761120842", "janine.armstrong@company.mail.com", 2, "1971/5/26");
-insert into logins (user_id, email, password_hash, salt) values (36, "janine.armstrong@company.mail.com", "755c61ff8b711c0e71645c339b385a941cedabca5813f2adcb3ab436eb722201", 7136);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("CHARLEY", "SCHMIDT", "79 TREVINO TURNABOUT", "8768678372", "charley.schmidt@canadia.gov.ca", 2, "1960/4/2");
-insert into logins (user_id, email, password_hash, salt) values (37, "charley.schmidt@canadia.gov.ca", "c78a33947116720a9d093562eb64e31ec89768725a026172812afe805d3dc3bb", 2917);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("MERCY", "DIAZ", "364 LOWERY FORK", "8769128324", "mercy.diaz@yahoo.com", 2, "1964/7/19");
-insert into logins (user_id, email, password_hash, salt) values (38, "mercy.diaz@yahoo.com", "2df7433c0c4f08614700d8a3a1dbb67c6ff6a12966f8a1e5639bc3c32571d066", 4171);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("AMIA", "WELCH", "457 GUEVARA CHARE", "8761466193", "amia.welch@live.com", 2, "1972/11/18");
-insert into logins (user_id, email, password_hash, salt) values (39, "amia.welch@live.com", "83b223e8a1c3e4723e12e00bcdcfe0c18d36060ee66af38ccadfdd7eeec399a5", 7595);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("AUBRIELLA", "PAGE", "239 ROBLES PLACEWAY", "8765518509", "aubriella.page@riot.games.co", 2, "1982/10/19");
-insert into logins (user_id, email, password_hash, salt) values (40, "aubriella.page@riot.games.co", "320f176571aba3b9683fdeaf9ae986b75823b0b03b003b6d449036dd93aac882", 6445);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("SAUL", "PINEDA", "417 GRIMES LODGE", "8767899498", "saul.pineda@organization.business.com", 2, "1964/7/1");
-insert into logins (user_id, email, password_hash, salt) values (41, "saul.pineda@organization.business.com", "41de4aaf7f481c052fb2d69d8eb1cea9754aa80fbea1e19fe9b57465cf5f7b15", 1395);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("MINA", "GOOD", "428 EATON GREEN", "8765334574", "mina.good@canadia.gov.ca", 2, "1986/6/1");
-insert into logins (user_id, email, password_hash, salt) values (42, "mina.good@canadia.gov.ca", "474765dcdd459fac0aae890fb0866e3d88e46352191c1cec14ae885eaba6615e", 3258);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("CATALEYA", "LE", "53 LUGO SENTIER", "8767639358", "cataleya.le@de.trash.co", 2, "1968/6/10");
-insert into logins (user_id, email, password_hash, salt) values (43, "cataleya.le@de.trash.co", "c8af2f8ece702ddcbf0bdcbadb6c17101085f3ebf0298a0ca3822737a1afe17e", 3494);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("EVANGELINE", "GALLEGOS", "411 DICKSON ISLE", "8769882102", "evangeline.gallegos@team.group.com", 2, "1984/10/20");
-insert into logins (user_id, email, password_hash, salt) values (44, "evangeline.gallegos@team.group.com", "3a27f92c166bfa4e45eb352f902f97a9584fcfe405484f77ec73fca4fcbbdbda", 118);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("MORGAN", "ATKINSON", "458 HULL REST", "8767293803", "morgan.atkinson@live.com", 2, "1989/9/5");
-insert into logins (user_id, email, password_hash, salt) values (45, "morgan.atkinson@live.com", "51682c1defb8943c5d26250b2cf5f5c259f5b2dce04702866d18973c8fa19e74", 1911);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("IVANNA", "SOSA", "77 ZHANG CRESCENT", "8762444875", "ivanna.sosa@de.trash.co", 2, "1966/8/27");
-insert into logins (user_id, email, password_hash, salt) values (46, "ivanna.sosa@de.trash.co", "b1bc5e70a34378a65198768454467963ff4355da8b953b39e03a35601b0a6da5", 406);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("ZACHERY", "MOSLEY", "136 PROCTOR RANGE", "8763814196", "zachery.mosley@parliament.gov.jm", 2, "2000/3/11");
-insert into logins (user_id, email, password_hash, salt) values (47, "zachery.mosley@parliament.gov.jm", "fe1da5b5b5907c16327f4131d391de505cbe91a78b72aad8ea48abda3933a5d6", 8141);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("ROBBIE", "STANLEY", "245 CORONA TUNNEL", "8766415814", "robbie.stanley@gmail.com", 2, "1986/11/21");
-insert into logins (user_id, email, password_hash, salt) values (48, "robbie.stanley@gmail.com", "f1aa03777e52a2b1be8a803f195307382b6f35ec2257374550404957f00adead", 9248);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("BRADLEY", "CARRILLO", "266 NOLAN LINE", "8762390695", "bradley.carrillo@live.com", 2, "1997/12/3");
-insert into logins (user_id, email, password_hash, salt) values (49, "bradley.carrillo@live.com", "e43940bcb4213edb2b8f67bcf501ec8e29cc0148d746e8e983c24f887ce7ebc4", 929);
-insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("DARIN", "WILKERSON", "350 HEATH RADIAL", "8761961638", "darin.wilkerson@canadia.gov.ca", 2, "1975/12/20");
-insert into logins (user_id, email, password_hash, salt) values (50, "darin.wilkerson@canadia.gov.ca", "387d6543087aab28694190993b3564704a43583e20fb8a5ee92a542ff29c38c6", 4120);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("CRYSTAL", "LYNN", "80 CLEMENTS LIGNE", "8769197668", "crystal.lynn@live.com", 2, "1981/10/18");
+insert into logins (user_id, email, password_hash, salt) values (1, "crystal.lynn@live.com", "6c12ba1edc1f38798af538385664ddf66ab2b3bee552a3b3895eb419daffdc6d", 3135);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("ALARIC", "NOVAK", "52 VANCE FARM", "8765718720", "alaric.novak@company.mail.com", 2, "1965/1/20");
+insert into logins (user_id, email, password_hash, salt) values (2, "alaric.novak@company.mail.com", "11dcd0ac6a3bf5a5dc84b508ca9f620e6a5a9620fce8e2120b8de4022c4e73d8", 6307);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("ANNA", "GARCIA", "457 CHANG TAILER", "8762456099", "anna.garcia@outlook.com", 2, "1976/12/6");
+insert into logins (user_id, email, password_hash, salt) values (3, "anna.garcia@outlook.com", "a8502b3c5e73a5f7fe5b7342f97ec2728b613169a8bb4e0491ff1f5f795ce9ca", 9947);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("MAXIMUS", "HAYDEN", "167 HOWE CRESCENT", "8764718851", "maximus.hayden@de.trash.co", 2, "1983/2/26");
+insert into logins (user_id, email, password_hash, salt) values (4, "maximus.hayden@de.trash.co", "aa7d66e88c5485c448bcee57ddd7738d49d4717181552dd5951320e1c34a2dfb", 3834);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("FIONA", "UNDERWOOD", "273 MELENDEZ ISLAND", "8767513340", "fiona.underwood@hotmail.com", 2, "1962/2/3");
+insert into logins (user_id, email, password_hash, salt) values (5, "fiona.underwood@hotmail.com", "3cabf362ba3079e253bbd07deb63cd460dc8d4de52084072247596df0d4234dc", 8805);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("ANNABEL", "CASTRO", "128 BARR STREAM", "8762198577", "annabel.castro@de.trash.co", 2, "1984/5/25");
+insert into logins (user_id, email, password_hash, salt) values (6, "annabel.castro@de.trash.co", "c12d03dcedbcbd281de55c7d2ca121209227134b78acb6c5e606ede0a419de11", 1728);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("ANGEL", "DODSON", "332 LYNN CASTLE", "8768484839", "angel.dodson@organization.business.com", 2, "1979/10/1");
+insert into logins (user_id, email, password_hash, salt) values (7, "angel.dodson@organization.business.com", "0e0dbfcb332eba9a14c59f63d3f1caa1b6a9401f81ed4be1341ea9155691c0ed", 3476);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("SHANA", "BENJAMIN", "109 RANGEL MOTORWAY", "8763756257", "shana.benjamin@live.com", 2, "1963/6/21");
+insert into logins (user_id, email, password_hash, salt) values (8, "shana.benjamin@live.com", "71d76b40cc637c40c2c1a23056964b49607aa2c8bffade48a016946f657ef7b7", 4698);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("CONRAD", "MCCALL", "431 BRANDT QUAI", "8768706218", "conrad.mccall@church.religion.com", 2, "1975/12/11");
+insert into logins (user_id, email, password_hash, salt) values (9, "conrad.mccall@church.religion.com", "c24d1a83501e652a0a80f408ebeffce3bd2343d9d120d4cbaa8b992847323b30", 6594);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("DOREEN", "PIERCE", "399 PINE LINK", "8762429095", "doreen.pierce@high_comiision.gov.uk", 2, "1985/1/25");
+insert into logins (user_id, email, password_hash, salt) values (10, "doreen.pierce@high_comiision.gov.uk", "e4db90186b137c0edf58f55da284fb9134001a7ff6bfb2be1b72751c5b65b9e1", 9084);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("JESSICA", "BANKS", "7 REYNA LINE", "8769714113", "jessica.banks@congress.gov.usa", 2, "1980/12/5");
+insert into logins (user_id, email, password_hash, salt) values (11, "jessica.banks@congress.gov.usa", "3058b6bafa49652974c53bdf66f3a70cb166620ad948029688baf92f7fdcc1ae", 3696);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("BERTHA", "JACOBS", "90 REYNA PATH", "8763665171", "bertha.jacobs@hotmail.com", 2, "1961/1/9");
+insert into logins (user_id, email, password_hash, salt) values (12, "bertha.jacobs@hotmail.com", "559b25a338a8f71f208c829f3c8588f366e13195f641b9fd50149b1af6302961", 6136);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("FISHER", "ROSALES", "252 CARDENAS POINT", "8761507620", "fisher.rosales@church.religion.com", 2, "1984/8/3");
+insert into logins (user_id, email, password_hash, salt) values (13, "fisher.rosales@church.religion.com", "b22694474c9d912f9c2f328f2a795cc3e5c9418a6e73837d41d1a4f204156a4f", 6757);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("CANDICE", "DUDLEY", "330 WIGGINS END", "8761453583", "candice.dudley@yahoo.com", 2, "1988/5/10");
+insert into logins (user_id, email, password_hash, salt) values (14, "candice.dudley@yahoo.com", "2f3c27c0af1a5c0434915f8d6e8847842ae814b4b9257802290093f00a976ac8", 6862);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("MARCUS", "HOLMES", "189 HARRELL ABBEY", "8760638416", "marcus.holmes@riot.games.co", 2, "1997/5/18");
+insert into logins (user_id, email, password_hash, salt) values (15, "marcus.holmes@riot.games.co", "c3886d9ccd746e23bcb801b64774eb30d2f20460dee2eea4ce246572fe07d59c", 6480);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("CLINT", "LANDRY", "188 WALTER MISSION", "8762532545", "clint.landry@canadia.gov.ca", 2, "1970/1/11");
+insert into logins (user_id, email, password_hash, salt) values (16, "clint.landry@canadia.gov.ca", "2fbd244f2078556b59814a1083b3137225351f53ebb639812c55dbe5cb3b8397", 2158);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("MADELYN", "MACDONALD", "478 NAVARRO RISE", "8768020173", "madelyn.macdonald@gmail.com", 2, "1994/9/17");
+insert into logins (user_id, email, password_hash, salt) values (17, "madelyn.macdonald@gmail.com", "efa162754f32d56490bcb80a43e0bc336e64a7d64b5e411cee9294a7668f4d9d", 8174);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("KATHERINE", "VAUGHN", "438 MONTOYA TURNPIKE", "8762099892", "katherine.vaughn@school.address.edu", 2, "1982/2/10");
+insert into logins (user_id, email, password_hash, salt) values (18, "katherine.vaughn@school.address.edu", "f9265e4d6ff8a68cf2e61546bacae93bfdec13ddd8c4e8e9f158dbeff9636c38", 3621);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("ABRIL", "GUERRERO", "159 TRUONG BURROW", "8761043290", "abril.guerrero@riot.games.co", 2, "1981/8/21");
+insert into logins (user_id, email, password_hash, salt) values (19, "abril.guerrero@riot.games.co", "b477e5f2597ff4cb751beea8fc7b5f85ba3d9eb358672e56ee3e3196bf1a06e4", 2850);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("GREGORY", "VALDEZ", "487 DONOVAN RUELLE", "8769777693", "gregory.valdez@proton-mail.com", 2, "1961/8/11");
+insert into logins (user_id, email, password_hash, salt) values (20, "gregory.valdez@proton-mail.com", "085d4804fcec4dc31e3622af817f4745f8249d5bd31d8efa942eeffd971ed0ab", 4051);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("MIRA", "SELLERS", "192 HAYDEN CAUSEWAY", "8766930864", "mira.sellers@proton-mail.com", 2, "1960/8/15");
+insert into logins (user_id, email, password_hash, salt) values (21, "mira.sellers@proton-mail.com", "b51786160e431c15f08df70f0210ed8c267cb5143989735b63787ee641ff089d", 9990);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("EFFIE", "ANDERSEN", "266 FINLEY CLOSE", "8769824069", "effie.andersen@live.com", 2, "1981/7/22");
+insert into logins (user_id, email, password_hash, salt) values (22, "effie.andersen@live.com", "9d7d6ea462f219caeeec75418b03c6aaad94f325f8032490fe14a76315ce9b16", 805);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("JAMIR", "VO", "49 PECK CHEMIN", "8769782917", "jamir.vo@church.religion.com", 2, "1972/3/28");
+insert into logins (user_id, email, password_hash, salt) values (23, "jamir.vo@church.religion.com", "b91dddcd1a7705afbcb6d23bdd672a83d2060533305ec07b2470beb15f82e196", 8589);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("GABRIELA", "PATEL", "14 PALACIOS BY-PASS", "8766920725", "gabriela.patel@team.group.com", 2, "1986/3/25");
+insert into logins (user_id, email, password_hash, salt) values (24, "gabriela.patel@team.group.com", "a2582826dfd83a5a44c060e0d6531fcbc345c57b86fe4c4cc041ddedb8aac058", 9910);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("KIM", "STARK", "54 KAUR VALE", "8769015678", "kim.stark@de.trash.co", 2, "1998/2/25");
+insert into logins (user_id, email, password_hash, salt) values (25, "kim.stark@de.trash.co", "10408286ec7420e1ea05cd3f53d7715c5adcd634d127be4c4095f5ae1b0c9036", 7581);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("ANDERS", "BURTON", "314 IBARRA PLAIN", "8767814471", "anders.burton@outlook.com", 2, "1975/5/25");
+insert into logins (user_id, email, password_hash, salt) values (26, "anders.burton@outlook.com", "e3aa387119e4500a9b0673b886542ac1e70e42078f9f4e381f6887f7eef88b17", 7340);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("ALEXIS", "CARLSON", "147 SAWYER VIA", "8761013985", "alexis.carlson@yahoo.com", 2, "1968/6/21");
+insert into logins (user_id, email, password_hash, salt) values (27, "alexis.carlson@yahoo.com", "d630b326759d2d861e837b84b131e2f3a53724bab5363078590fb7755641adea", 7120);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("LAYTON", "FROST", "448 DORSEY IMPASSE", "8765834440", "layton.frost@company.mail.com", 2, "1989/2/24");
+insert into logins (user_id, email, password_hash, salt) values (28, "layton.frost@company.mail.com", "80a71faed3f49b38058048a0629e4ddc862f5c67c8bd2ca7de808207713a9c9d", 4709);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("JEWELL", "SOLOMON", "492 TANNER NOT", "8765049237", "jewell.solomon@outlook.com", 2, "2002/1/3");
+insert into logins (user_id, email, password_hash, salt) values (29, "jewell.solomon@outlook.com", "68f6c60a4164fb5a0a502419f1a610b4fe13b78bb32589f373d2c325966b1710", 4503);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("MILAN", "MORRISON", "270 JEFFERSON RUE", "8767820223", "milan.morrison@congress.gov.usa", 2, "1994/12/25");
+insert into logins (user_id, email, password_hash, salt) values (30, "milan.morrison@congress.gov.usa", "a771f825fa8b62199a2f4792f42cf80c42cbe580e53539e98deb94b20b98ac09", 6330);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("KINSLEY", "SANTOS", "178 FRIEDMAN DIVIDE", "8762277789", "kinsley.santos@de.trash.co", 2, "1968/3/2");
+insert into logins (user_id, email, password_hash, salt) values (31, "kinsley.santos@de.trash.co", "2120b5c7051e9fb7112135e250f2815a5f69d37a28711ba9e28959fc1f4088b2", 1897);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("MAGDALENA", "TYLER", "166 ROCHA RIGHT", "8763799320", "magdalena.tyler@congress.gov.usa", 2, "1967/8/10");
+insert into logins (user_id, email, password_hash, salt) values (32, "magdalena.tyler@congress.gov.usa", "634aaa34020aa1f3e748af48acb1f53ed8d48e83bca91d8332f92b15c4c4f6c3", 2759);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("LONDYN", "MACDONALD", "499 DUDLEY MEADOW", "8769529012", "londyn.macdonald@yahoo.com", 2, "1975/8/8");
+insert into logins (user_id, email, password_hash, salt) values (33, "londyn.macdonald@yahoo.com", "a5c04240e764a761f84760a893c104fb2977f57dd588b63fb73d7c5eaf800dc0", 6135);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("BAYLOR", "TATE", "395 REYNA NECK", "8764016552", "baylor.tate@church.religion.com", 2, "1993/9/28");
+insert into logins (user_id, email, password_hash, salt) values (34, "baylor.tate@church.religion.com", "7f83fe696ff978e9d12385a7dbc42b5e33a9b32d6a820ce2d21f93d83b832574", 1570);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("LYNDA", "MAYER", "168 GALINDO FALL", "8763210302", "lynda.mayer@hotmail.com", 2, "1972/9/4");
+insert into logins (user_id, email, password_hash, salt) values (35, "lynda.mayer@hotmail.com", "f29b2f47df56a57906140c377bceafca644bac24ac0dbd30bdf1ebb4e7dce719", 125);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("CHLOE", "CUNNINGHAM", "332 KAUR TRACE", "8764855142", "chloe.cunningham@company.mail.com", 2, "1977/9/19");
+insert into logins (user_id, email, password_hash, salt) values (36, "chloe.cunningham@company.mail.com", "13a1784bdf3ba4df9de9e018c97d81094862bbc59001c09bff56a3606058a251", 8926);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("CAIDEN", "MCGUIRE", "31 BULLOCK NECK", "8764348713", "caiden.mcguire@gmail.com", 2, "1984/11/28");
+insert into logins (user_id, email, password_hash, salt) values (37, "caiden.mcguire@gmail.com", "fb0ec2d9379c9b0433dc140698c8925bf9b1bec163ee1c869736ca553b27a4f0", 3014);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("CLAUDIA", "GREGORY", "433 MACIAS RIDGE", "8763344853", "claudia.gregory@yahoo.com", 2, "1971/9/15");
+insert into logins (user_id, email, password_hash, salt) values (38, "claudia.gregory@yahoo.com", "f8268636febde80666003b9d1e7ee55de5baa1a0de4936ffaf0f507ddaa76299", 6228);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("JAMIE", "PATTERSON", "209 FRANK BY-PASS", "8762702077", "jamie.patterson@team.group.com", 2, "1990/9/3");
+insert into logins (user_id, email, password_hash, salt) values (39, "jamie.patterson@team.group.com", "9644f6b094ab4caafacbabbd62aa10bc37cc026509127a8051fe141c237a4a30", 9395);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("KYNLEE", "CUMMINGS", "50 WIGGINS THROUGHWAY", "8765428032", "kynlee.cummings@outlook.com", 2, "1994/10/19");
+insert into logins (user_id, email, password_hash, salt) values (40, "kynlee.cummings@outlook.com", "6e77acb2b706c31521cd73b53c31272ed7798bcfa041556bd427298963a297c9", 7458);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("LANDYN", "RICHMOND", "284 HAIL NECK", "8760583042", "landyn.richmond@congress.gov.usa", 2, "1992/10/16");
+insert into logins (user_id, email, password_hash, salt) values (41, "landyn.richmond@congress.gov.usa", "547856284d519ed6c2cfcfbec79ca03420a06087519275be7a78a148f1646e9e", 7425);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("ALEENA", "FIGUEROA", "26 RANDALL TOWERS", "8760737604", "aleena.figueroa@company.mail.com", 2, "1975/2/1");
+insert into logins (user_id, email, password_hash, salt) values (42, "aleena.figueroa@company.mail.com", "7e5d404521006de27c9766578b0a2227dc7b4d20d42674e1f9264b5b7db55bd6", 2258);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("BODHI", "CASEY", "28 HERMAN TAILER", "8764497319", "bodhi.casey@gmail.com", 2, "1996/6/14");
+insert into logins (user_id, email, password_hash, salt) values (43, "bodhi.casey@gmail.com", "e738da2a01a2d9cce8246cf156321453eb369fb3d40fd795244ca0384af3b23c", 6875);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("BENNETT", "GARDNER", "170 DAUGHERTY COURSE", "8761132832", "bennett.gardner@outlook.com", 2, "1984/9/5");
+insert into logins (user_id, email, password_hash, salt) values (44, "bennett.gardner@outlook.com", "33c4c2569ac76f0cf1968ff06fbb6cbb2678dbcc965d05188b4d1d40e3df8141", 7954);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("HECTOR", "VILLEGAS", "295 JEFFERSON SPRINGS", "8764389411", "hector.villegas@riot.games.co", 2, "1984/6/20");
+insert into logins (user_id, email, password_hash, salt) values (45, "hector.villegas@riot.games.co", "2a593294f8bdaee003538571aca79b907fd70f3592e287c0df87f4937ebfce0a", 9822);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("SHANA", "VENTURA", "172 DICKSON GROVE", "8766115016", "shana.ventura@proton-mail.com", 2, "1979/12/1");
+insert into logins (user_id, email, password_hash, salt) values (46, "shana.ventura@proton-mail.com", "df4b7562f536da7c61f15550d5a42bb2021bb932f6859d910ebedd81a10ca382", 6839);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("ROWAN", "DAY", "417 GRIMES LODGE", "8763995987", "rowan.day@organization.business.com", 2, "1968/6/24");
+insert into logins (user_id, email, password_hash, salt) values (47, "rowan.day@organization.business.com", "bb1139fbbf48203214fb23bb64bb2e4f742440e2e537566c92bc24072c5d5a50", 256);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("WESLEY", "GILES", "246 OWEN TOWNLINE", "8762408795", "wesley.giles@yahoo.com", 2, "1973/2/19");
+insert into logins (user_id, email, password_hash, salt) values (48, "wesley.giles@yahoo.com", "efbd3eb5ce11e9bf38b4828eeb7affcfba852b9dc2bd19aaf84643bc1647640e", 3703);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("PIPER", "ANDRADE", "30 CLAY ESTATES", "8765748844", "piper.andrade@parliament.gov.jm", 2, "2000/9/5");
+insert into logins (user_id, email, password_hash, salt) values (49, "piper.andrade@parliament.gov.jm", "24bbb517b3e04b74908cc844dda083a84b3fe7d0c108bf379afcdbb76f9b16e9", 5045);
+insert into users (first_name, last_name, home_address, tele_num, email, clearance, dob) values ("RANDAL", "WILLIAMSON", "64 MULLEN CUL-DE-SAC", "8767695380", "randal.williamson@de.trash.co", 2, "1995/10/2");
+insert into logins (user_id, email, password_hash, salt) values (50, "randal.williamson@de.trash.co", "2a0da62aa6b9dd544f1765e274a01453115ce8a287ea6369b5bfc20fefd732ca", 1885);
