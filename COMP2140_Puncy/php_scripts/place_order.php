@@ -116,9 +116,12 @@
             $sql = "select * from users where user_id = " . $_SESSION['id'] . ";";
             $conn->prepare($sql);
             $user_data = $conn->query($sql)->fetch_assoc();
-            $sql = "select * from orders where order_id = " . $_GET['temp'] . ";";
-            $conn->prepare($sql);
-            $template = $conn->query($sql)->fetch_assoc();
+            if($_GET)
+            {
+                $sql = "select * from orders where order_id = " . $_GET['temp'] . ";";
+                $conn->prepare($sql);
+                $template = $conn->query($sql)->fetch_assoc();
+            }
             
         ?>
         <div style = "background-color:#3167eb;width=100%">
@@ -157,29 +160,45 @@
                         </div>
                         <div class="col-12 col-sm-6">
                         <?php
-                            if($template)
+                            if($_GET)
                             {
-                                $input = '<input class="order-form-input" name = "fname" value="'.ucfirst(strtolower($template['first_name'])).'" required = "required"/>';
+                                if($template)
+                                {
+                                    $input = '<input class="order-form-input" name = "fname" value="'.ucfirst(strtolower($template['first_name'])).'" required = "required"/>';
+                                }
+                                else
+                                {
+                                    $input = '<input class="order-form-input" name = "fname" value="'.ucfirst(strtolower($user_data['first_name'])).'" required = "required"/>';
+                                }
                             }
                             else
                             {
                                 $input = '<input class="order-form-input" name = "fname" value="'.ucfirst(strtolower($user_data['first_name'])).'" required = "required"/>';
                             }
+                            
                             echo $input;
                         ?>
 
                         </div>
                         <div class="col-12 col-sm-6 mt-2 mt-sm-0">
                           <?php
-                            if($template)
+                            if($_GET)
                             {
-                                $input = '<input class="order-form-input" name = "lname" value="'.ucfirst(strtolower($template['last_name'])).'" required/>';
-                            
+                                if($template)
+                                {
+                                    $input = '<input class="order-form-input" name = "lname" value="'.ucfirst(strtolower($template['last_name'])).'" required/>';
+
+                                }
+                                else
+                                {
+                                    $input = '<input class="order-form-input" name = "lname" value="'.ucfirst(strtolower($user_data['last_name'])).'" required/>';
+                                }
                             }
                             else
                             {
                                 $input = '<input class="order-form-input" name = "lname" value="'.ucfirst(strtolower($user_data['last_name'])).'" required/>';
-                            }
+                            }   
+
                             echo $input;
                           ?>
                         </div>
@@ -198,17 +217,25 @@
                               $jobs = $conn->query($sql);
                               foreach($jobs as $job)
                               {
-                                  if($template)
+                                  if($_GET)
                                   {
-                                      if($template['type'] == $job['type'])
+                                      if($template)
                                       {
-                                          $option = "<option value = ".$job['preset_id']." name = ".$job['type']." selected = 'selected'>" .$job['type']. "</option>";
-                                      }
-                                      else
-                                      {
-                                          $option = "<option value = ".$job['preset_id']." name = ".$job['type'].">" .$job['type']. "</option>";
+                                          if($template['type'] == $job['type'])
+                                          {
+                                              $option = "<option value = ".$job['preset_id']." name = ".$job['type']." selected = 'selected'>" .$job['type']. "</option>";
+                                          }
+                                          else
+                                          {
+                                              $option = "<option value = ".$job['preset_id']." name = ".$job['type'].">" .$job['type']. "</option>";
+                                          }
                                       }
                                   }
+                                  else
+                                  {
+                                      $option = "<option value = ".$job['preset_id']." name = ".$job['type'].">" .$job['type']. "</option>";
+                                  }
+                                  
                                   
                                   echo $option;
                               }
@@ -227,8 +254,12 @@
                             <div class="col-12">
                               <div class="form-check">
                                 <?php
-                                    if($template['measurements_id'] == 1)
+                                    if($_GET)
                                     {
+                                        if($template['measurements_id'] == 1)
+                                        {
+                                    
+                                    
                                         ?>
                                         <input type="checkbox" class="form-check-input" name="new-measurements" id="new-measurements" checked value = 1>
                                 <?php
@@ -238,6 +269,13 @@
                                         ?>
                                         <input type="checkbox" class="form-check-input" name="new-measurements" id="new-measurements" value = 1>
                                   <?php
+                                    }
+                                    }
+                                    else
+                                    {
+                                        ?>
+                                        <input type="checkbox" class="form-check-input" name="new-measurements" id="new-measurements" value = 1>
+                                <?php
                                     }
                                 ?>
                                 
@@ -276,14 +314,24 @@
                             <div id = "set-meas-name">
                                 <div class="col-12 col-sm-6">
                                     <?php
-                                        if($template)
+                                        if($_GET)
                                         {
-                                            $sql = "select * from measurements where measurement_id = " . $template['measurements_id'] . ";";
-                                            $conn->prepare($sql);
-                                            $measurement = $conn->query($sql)->fetch_assoc();
-                                            ?>
-                                            <input class="order-form-input" name = "meas-name" id = "meas-name" value = "<?php echo $measurement['name']; ?>"/>
-                                    <?php
+                                            if($template)
+                                            {
+                                                $sql = "select * from measurements where measurement_id = " . $template['measurements_id'] . ";";
+                                                $conn->prepare($sql);
+                                                $measurement = $conn->query($sql)->fetch_assoc();
+                                                ?>
+                                                <input class="order-form-input" name = "meas-name" id = "meas-name" value = "<?php echo $measurement['name']; ?>"/>
+                                        <?php
+                                            }
+                                            else
+                                            {
+                                                ?>
+                                                <input class="order-form-input" name = "meas-name" id = "meas-name" placeholder = "What would you like to save this preset as?"/>
+                                        <?php
+                                            }
+                                    
                                         }
                                         else
                                         {
@@ -291,7 +339,7 @@
                                             <input class="order-form-input" name = "meas-name" id = "meas-name" placeholder = "What would you like to save this preset as?"/>
                                     <?php
                                         }
-                                    ?>
+                                      ?>  
                                     
                                 </div>
                             </div>
@@ -605,17 +653,25 @@
                         </div>
                         <div class="col-12">
                           <?php
-                            if($template)
+                            if($_GET)
                             {
-                                if ($template['delivery_address'])
+                                if($template)
                                 {
-                                    $input = '<input class="order-form-input" name = "addr" value = "'.$template['delivery_address'].'">';
-                                }
-                                else
-                                {
-                                    $input = '<input class="order-form-input" name = "addr" value = "'.$user_data['home_address'].'">';
+                                    if ($template['delivery_address'])
+                                    {
+                                        $input = '<input class="order-form-input" name = "addr" value = "'.$template['delivery_address'].'">';
+                                    }
+                                    else
+                                    {
+                                        $input = '<input class="order-form-input" name = "addr" value = "'.$user_data['home_address'].'">';
+                                    }
                                 }
                             }
+                            else
+                            {
+                                $input = '<input class="order-form-input" name = "addr" value = "'.$user_data['home_address'].'">';
+                            }
+                            
                             
                             
                             echo $input;
@@ -629,17 +685,25 @@
                         </div>
                         <div class="col-12">
                           <?php
-                            if($template)
+                            if($_GET)
                             {
-                                if ($template['delivery_address'])
+                                if($template)
                                 {
-                                    $input = '<input class="order-form-input" name = "addr" value = "'.$template['contact_num'].'">';
-                                }
-                                else
-                                {
-                                    $input = '<input class="order-form-input" name = "addr" value = "'.$user_data['tele_num'].'">';
+                                    if ($template['delivery_address'])
+                                    {
+                                        $input = '<input class="order-form-input" name = "addr" value = "'.$template['contact_num'].'">';
+                                    }
+                                    else
+                                    {
+                                        $input = '<input class="order-form-input" name = "addr" value = "'.$user_data['tele_num'].'">';
+                                    }
                                 }
                             }
+                            else
+                            {
+                                $input = '<input class="order-form-input" name = "addr" value = "'.$user_data['tele_num'].'">';
+                            }
+                            
                             echo $input;
                           ?>
                         </div>

@@ -273,9 +273,9 @@ $(document).ready(function() {
 <div class="row">
 	<div class="col-md-3">
 		<div href="#" class="card card-product-grid">
-			<a href="#" class="img-wrap"> <img src="images/items/1.jpg"> </a>
+			<a href="#" class="img-wrap"> <img src="../templates/assets/shirt.jpg"> </a>
 			<figcaption class="info-wrap">
-				<a href="#" class="title">Regular Shirt</a>
+				<a href="place_order.php" class="title">Regular Shirt</a>
 				
 				<div class="rating-wrap">
 					<ul class="rating-stars">
@@ -294,9 +294,9 @@ $(document).ready(function() {
 	</div> <!-- col.// -->
 	<div class="col-md-3">
 		<div href="#" class="card card-product-grid">
-			<a href="#" class="img-wrap"> <img src="images/items/2.jpg"> </a>
+			<a href="#" class="img-wrap"> <img src="../templates/assets/pants.jpg"> </a>
 			<figcaption class="info-wrap">
-				<a href="#" class="title">Regular Pants</a>
+				<a href="place_order.php" class="title">Regular Pants</a>
 				
 				<div class="rating-wrap">
 					<ul class="rating-stars">
@@ -315,9 +315,9 @@ $(document).ready(function() {
 	</div> <!-- col.// -->
 	<div class="col-md-3">
 		<div href="#" class="card card-product-grid">
-			<a href="#" class="img-wrap"> <img src="images/items/3.jpg"> </a>
+			<a href="#" class="img-wrap"> <img src="../templates/assets/shorts.jpg"> </a>
 			<figcaption class="info-wrap">
-				<a href="#" class="title">Regular Shorts</a>
+				<a href="place_order.php" class="title">Regular Shorts</a>
 				
 				<div class="rating-wrap">
 					<ul class="rating-stars">
@@ -336,9 +336,9 @@ $(document).ready(function() {
 	</div> <!-- col.// -->
 	<div class="col-md-3">
 		<div href="#" class="card card-product-grid">
-			<a href="#" class="img-wrap"> <img src="images/items/4.jpg"> </a>
+			<a href="#" class="img-wrap"> <img src="../templates/assets/skirt.jpg"> </a>
 			<figcaption class="info-wrap">
-				<a href="#" class="title">Regular Skirt</a>
+				<a href="place_order.php" class="title">Regular Skirt</a>
 				
 				<div class="rating-wrap">
 					<ul class="rating-stars">
@@ -354,7 +354,9 @@ $(document).ready(function() {
 				<div class="price mt-1">$2500-$5000</div> <!-- price-wrap.// -->
 			</figcaption>
 		</div>
-	</div> <!-- col.// -->
+	</div>
+    
+    <!-- col.// -->
 </div> <!-- row.// -->
 
 </div> <!-- container .//  -->
