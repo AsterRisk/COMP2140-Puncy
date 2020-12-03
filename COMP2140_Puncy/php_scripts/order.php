@@ -8,7 +8,8 @@
 	$type = ($_POST['job-type']);
 	$new = (isset($_POST['new-measurements']) && ($_POST['new-measurements']== 1));
     $due_date = $_POST['due-date'];
-    echo "<h1>DUE DATE: " . $due_date . "</h1>";
+    $date_m = explode("/", $due_date);
+    $due_date = $date_m[2] . "/" . $date_m[0] . "/" .$date_m[1];
     $address = $_POST['addr'];
     $phone = $_POST['phone'];
     $date_placed = date("Y/m/d");
@@ -19,12 +20,12 @@
     $bring_fab = (isset($_POST['bringing-fabric']) && ($_POST['bringing-fabric']== 1));
     if($bring_fab)
     {
-        $est_cost = $base_price + 5000;
+        $est_cost = $base_price;
 
     }
     else
     {
-        $est_cost = $base_price;
+        $est_cost = $base_price + 5000;
     }
     if ($new)
     {
@@ -96,22 +97,16 @@
             $round_knee = $_POST['sh_round-knee'];
             $sql = "insert into measurements (user_id, job_type, name, leng, waist, hip, round_leg, round_knee) values (".$_SESSION['id'] .",'".$job_type."', '".$measurement_name."', ".$length.", ". $waist .", " . $hip .", ".$round_leg.", ".$round_knee.");";
         }
-        echo $sql;
-        echo "<br><br>";
+        
         $conn->prepare($sql);
         $conn->query($sql);
         $sql = "select max(measurement_id) from measurements;";
         $conn->prepare($sql);
         $meas_id = $conn->query($sql)->fetch_assoc()['max(measurement_id)'];
-        
-        
-        
-        
     }
     else
     {
         $meas_id = $_POST['measurement_id'];
-        
     }
 
     $sql = "insert into orders (state, date_placed, user_id, first_name, last_name, measurements_id, due_date, est_cost, providing_fabric, type) values ('Accepted', '" . $date_placed . "', " . $_SESSION['id'] . ", '" . $fname . "', '" . $lname . "', " . $meas_id . ", '" . $due_date . "', " . $est_cost . ", TRUE, '".$job_type."');";
